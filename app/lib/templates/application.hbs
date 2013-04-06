@@ -1,0 +1,41 @@
+<div id="title">
+    <div class="row full-width"> 
+      <div class="small-6 columns">
+        <h3 class="subheader">Ember - JEE REST </h3>
+      </div>
+      <div class="large-5 large-offset-1 columns">
+        {{#if App.ajaxLoadingController.loading}}<h4><span class="radius secondary label">Loading</span><h4>{{/if}}
+      </div>      
+    </div>
+</div>
+
+<div class="row">
+  {{template nav}}
+</div>
+
+<div class="row">
+  {{#if messages.hasMessages}}
+    <ul class="msg">
+    {{#each messages.errors}}
+    <li class="msg msg-error">{{message}}</li>
+    {{/each}}
+    {{#each messages.sucess}}
+    <li class="msg msg-sucess">{{message}}</li>
+    {{/each}}
+    {{#each messages.fieldErrors}}
+    <li class="msg msg-error">{{class_name}} {{property}} : {{message}}</li>
+    {{/each}}
+    <li><button {{action clearMessages bubles=false}} class="tiny button secondary"><span class="close">✗ Close messages</span></button><li>
+    </ul>
+  {{/if}}
+</div>
+
+<div class="row">
+    {{outlet}}
+</div>
+
+<div id="copyright">
+    <div class="row full-width">
+        <h6 class="subheader">ERJ v{{App.VERSION}}</h6>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="panel callout radius select">
+  {{#each this}}
+    <div class="tiny button secondary expand" {{bindAttr title="description"}} {{action "selectProduct" this}} >
+    {{name}}
+    </div>
+  {{else}}
+    <div> No products found </div>
+  {{/each}}
+</div>

@@ -1,0 +1,94 @@
+# This file is based on Ember 'todos' Assetfile 
+# All of rake-pipeline's web goodness lives here.
+require "rake-pipeline-web-filters"
+require "json"
+require "yui/compressor"
+
+# All of our outputs will be relative to the `public/`
+# directory.
+output "target/public"
+
+# All of our inputs to the pipeline live under the `app/`
+# directory. We could also specify a glob if we wanted to
+# limit the files in that directory, e.g.:
+#
+#   input "app", "**/*.scss"
+#
+# would limit the input to just scss files. All of our paths
+# inside this Assetfile will be relative to this directory.
+input "app" do
+
+  MY_APP="ejr"
+
+  # Here we specify a match block so we can apply a filter to
+  # a subset of the files in our input directory. We're turning
+  # our handlebars template files into javascript files.
+  match "**/*.{handlebars,hbs}" do
+    handlebars
+  end
+
+  # Now we match all the rest of the JavaScript files. Because the
+  # outputs of our handlebars filter are JavaScript files, those
+  # will get matched by this block, too.
+  match "lib/**/*.js" do
+    # The minispade helper wraps each JS file in some code to
+    # register it with the [minispade](https://github.com/wycats/minispade)
+    # module loader.
+
+    minispade :rewrite_requires => true,
+              :module_id_generator => proc { |input|
+      # The `:module_id_generator` option customizes the name each file
+      # gets registered under. Here we're changing a name like this:
+      #    lib/vendor/ember.js
+      # into:
+      #    ${MY_APP}/vendor/ember
+      #
+      # So using minispade, we can write:
+      #    minispade.require('#{MY_APP}/vendor/ember');
+      # in our JS when we want to load ember.js.
+      input.path.sub(/lib\//, "#{MY_APP}/").sub(/\.js$/, '')
+    }
+
+    # After being wrapped in the minispade code, we want to concatenate
+    # all the javascript files together.
+    concat "js/app.js"
+  end
+
+  # Now for our stylesheets. We're using Sass. We want to use
+  # Sass's `@import` statement to control the order in which our
+  # stylesheets get loaded, so we only match a single master
+  # .scss file, and use `@import` from there to load the rest.
+  match "**/*.css" do
+    yui_css
+    concat "css/application.css"
+  end
+
+  # Now for our stylesheets. We're using Sass. We want to use
+  # Sass's `@import` statement to control the order in which our
+  # stylesheets get loaded, so we only match a single master
+  # .scss file, and use `@import` from there to load the rest.
+  match "css/bootstrap.scss" do
+    # The `:additional_load_paths` option lets us tell Sass that
+    # it should look in our styles directory to find `@import`s.
+    scss :additional_load_paths => "app/css"
+
+    # We're only matching a single file here, but we want it to
+    # end up in our css/ directory.
+    copy "css/bootstrap.css"
+  end
+
+  # Finally, we keep our static assets that don't need any processing
+  # in a `static/` directory.
+  match "static/**/*" do
+    # The block we pass to `concat` lets us adjust the output path
+    # of any files it matches. Here we take each input and strip
+    # off the `static/` prefix, so `app/static/index.html` ends up
+    # in `public/index.html`.
+    concat do |input|
+      input.sub(/static\//, '')
+    end
+  end
+
+end
+
+# vim:ft=ruby

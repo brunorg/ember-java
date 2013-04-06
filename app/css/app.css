@@ -1,0 +1,91 @@
+h1, h2, h3, h4, h5, h6 {
+  color: #ddd !important;
+}
+
+h1.secondary, h2.secondary, h3.secondary, h4.secondary, h5.secondary, h6.secondary {
+  color: #369 !important;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+#nav-bar a.active {
+  background-color: #87acae !important;
+}
+
+div.select {
+  height: 200px;
+  overflow: scroll;
+  padding: 10px !important;
+}
+
+div.select > div.button {
+  margin: 1px;
+  padding-left: 5px;
+  text-align: left;
+}
+
+.closed {
+  display: none;
+}
+
+#title {
+  background: #5a8486;
+  margin-bottom: 10px;
+}
+
+#copyright {
+  background: #5a8486;
+  padding: 2px 0;
+  margin-top: 30px;
+}
+
+td.nodata {
+  background: #ffc99b;
+  text-align: center;
+}
+
+td.total {
+  background: #eaf9ea;
+}
+
+.left {
+  text-align: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.msg {
+  list-style: none;
+  padding: 2px;
+  padding-left: 25px;
+  min-height: 15px;
+  margin-bottom: 2px;
+}
+
+.msg-info {
+  border: 1px solid #98b3be;
+  color: #274d5d;
+  background: url(../images/info-icon.png) 5px 5px no-repeat #eaf0f7;
+}
+
+.msg-error {
+  border: 1px solid #ffbaba;
+  color: #c57575;
+  background: url(../images/error-icon.png) 5px 5px no-repeat #ffeaea;
+}
+
+.msg-success {
+  border: 1px solid #1c851f;
+  color: #1c851f;
+  background: url(../images/ok-icon.png) 5px 5px no-repeat #e1fee1;
+}
+
+.msg-warn {
+  border: 1px solid #696a0e;
+  color: #696a0e;
+  background: url(../images/warn-icon.png) 5px 5px no-repeat #fdfee1;
+}

@@ -1,0 +1,96 @@
+{{#view App.FormView}}
+  <fieldset>
+    <legend>Order</legend>
+
+    <div class="row">
+      <div class="large-3 columns">
+        <label>Id</label>
+        <h5>{{#if id}} {{id}} {{else}} New {{/if}}</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-5 columns" {{action showCustomers}}>
+        <label>Customer</label>
+        {{#if customer.id}}
+          {{view App.TextField valueBinding="customer.fullName" readonly="readonly" placeholder="Last Name"}}
+        {{else}}
+          <button class="label alert">Click to select a customer</button>
+        {{/if}}
+      </div>
+      <div {{bindAttr class=":large-7 :columns isCustomersListEnabled::closed"}}>
+        {{#with controllers.customers}}
+        {{ partial "customer_selector" }}
+        {{/with}}
+      </div>
+    </div>
+
+    {{#if id}}
+    <div class="row">
+      <div class="large-12 columns">
+        <h5 class="secondary">Total Order Cost:  {{money totalPrice}}</h5>
+      </div>
+      <div class="large-4 columns">
+        <button {{action showProducts}} class="small">Add Item</button>
+      </div>
+      <div {{bindAttr class=":large-8 :columns isProductsListEnabled::closed"}}>
+        {{#with controllers.products}}
+        {{ partial "product_selector" }}
+        {{/with}}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
+        <table>
+          <thead>
+            <tr>
+              <th width="150">Product Name</th>
+              <th width="300">Product Desc</th>
+              <th >Price</th>
+              <th >Qty</th>
+              <th >Total</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+            <tr>
+              <td>{{product.name}}</td>
+              <td>{{product.description}}</td>
+              <td>{{money product.price}}</td>
+              <td>{{view App.IntegerField valueBinding="quantity"}}</td>
+              <td>{{money totalPrice}}</td>
+              <td><button {{action deleteItem this}} class="button tiny radius alert"> Delete </button></td>
+            </tr>
+            {{else}}
+            <tr><td colspan="6"></td></tr>
+            <tr>
+              <td colspan="6" class="nodata">No itens added</td>
+            </tr>
+            {{/each}}
+            {{#if totalItems}}
+            <tr>
+              <td colspan="3" class="total"><h5 class="secondary right">Grand Total</h5></td>
+              <td class="total"><h5 class="secondary">{{totalItems}}</h5></td>
+              <td class="total"><h5 class="secondary">{{money totalPrice}}</h5></td>
+              <td class="total"></td>
+            </tr>
+            {{/if}}
+          </tbody>
+        </table>
+     </div>
+    </div>
+    {{/if}}
+
+    {{#if id}}
+      {{#if canUpdate}}
+        <button {{action update}} class="small"> Update </button>
+      {{else}}
+        <button class="small disabled"> Update </button>
+      {{/if}}
+    {{else}}
+        <button {{action update}} class="small"> Save </button>
+    {{/if}}
+  </fieldset>
+{{/view}}

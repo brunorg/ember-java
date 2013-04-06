@@ -1,0 +1,1 @@
+require('ejr/views/application');

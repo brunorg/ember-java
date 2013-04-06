@@ -1,0 +1,28 @@
+{{#linkTo product.new}}<button class="small"> New Product </button>{{/linkTo}}
+<table>
+  <thead>
+    <tr>
+      <th width="100">ID</th>
+      <th>Name</th>
+      <th width="200">Description</th>
+      <th>Price</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each controller}}
+    <tr>
+      <td>{{#linkTo product this}} {{id}} {{/linkTo}}</td>
+      <td>{{name}}</td>
+      <td>{{description}}</td>
+      <td>{{price}}</td>
+      <td><button {{action delete this}} class="button tiny radius alert"> Delete </button></td>
+    </tr>
+    {{else}}
+    <tr><td colspan="5"></td></tr>
+    <tr>
+      <td colspan="5" class="nodata">No products found</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
