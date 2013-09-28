@@ -1,3 +1,4 @@
+require('ejr/templates/index');
 require('ejr/templates/application');
 require('ejr/templates/nav');
 

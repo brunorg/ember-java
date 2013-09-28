@@ -2,7 +2,9 @@ require('ejr/core');
 
 App.ProductsController = Ember.ArrayController.extend({
   content: App.Product.find(),
-  delete: function(model) {
+
+  remove: function(model) {
+    this.get('content').removeReference(model);
     model.deleteRecord();
     model.get('transaction').commit();
   }

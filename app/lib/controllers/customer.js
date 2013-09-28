@@ -3,7 +3,8 @@ require('ejr/core');
 App.CustomersController = Ember.ArrayController.extend({
   content: App.Customer.find(),
 
-  delete: function(model) {
+  remove: function(model) {
+    this.get('content').removeReference(model);
     model.deleteRecord();
     model.get('transaction').commit();
   }

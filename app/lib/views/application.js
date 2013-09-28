@@ -11,8 +11,8 @@ App.TextField = Ember.TextField.extend({
 
   keyPress: function(e) {
     if (e.which === 13) {
-      event.preventDefault();
-      event.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
       return false;
     }
   }
