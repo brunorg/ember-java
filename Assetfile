@@ -4,6 +4,98 @@ require "rake-pipeline-web-filters"
 require "json"
 require "yui/compressor"
 
+class PassThroughPipeline < Rake::Pipeline
+  # this need to act like a filter
+  attr_accessor :pipeline
+
+  # simply return the original input_files
+  def output_files
+    input_files
+  end
+
+  # this is very imporant! define this method
+  # to do nothing and files will not be copied 
+  # to the output directory
+  def finalize
+  end
+end
+
+class SortedPipeline < PassThroughPipeline
+
+  class CircularDependenceError < StandardError
+  end
+
+  def output_files
+    dependency_graph = Graph.new
+
+    input_files.each do |input|
+
+      dependency_graph.add(input.path.to_s)
+      if input.exists?
+        require_lines = input.read.scan(/.*require\(['"].*?['"]\);.*/).join("\n")
+        
+        # Removing the simple comments only
+        require_lines = require_lines.sub(/\/\/.*/, '')
+
+        # getting the dependencies
+        dependencies = require_lines.scan(/require\(['"](.*?)['"]\);/)
+
+        dependencies.each { |item|
+          dependency = item[0].sub(MY_APP, 'lib') + ".js"
+          dependency_graph.add(dependency)
+          dependency_graph.link(input.path.to_s, dependency)
+        }
+
+      end
+    end
+
+    nodes = dependency_graph.nodes
+
+    single_nodes = nodes.select { |node|
+      node.parents.empty? and node.children.empty?
+    }
+
+    nodes_without_parents = nodes.select { |node|
+      node.parents.empty? and not node.children.empty?
+    }
+
+    order_arr = single_nodes.map { |node| node.name }
+
+    nodes_without_parents.each { |node| 
+      building_order(node, order_arr) 
+    }
+
+    #order_arr.each { |e| puts e }
+
+    input_files.sort! do |f1, f2|
+      order_arr.index(f1.path.to_s) <=> order_arr.index(f2.path.to_s)
+    end
+
+  end
+
+  def print_tree(node, level = 0, backtrack = [])
+    puts ("  ".* level) + node.name
+    raise CircularDependenceError, "Circular dependencies found" if backtrack.include?(node.name)
+    backtrack << node.name
+    node.children.each do |child|
+      print_tree(child, level+1, backtrack)
+    end
+    backtrack.pop
+  end
+
+  def building_order(node, order_arr, idx = order_arr.size)
+    node.children.each do |child|
+      idx = building_order(child, order_arr, idx)
+    end
+    if not order_arr.include?(node.name)
+      order_arr.insert(idx, node.name)
+      idx += 1
+    end
+    idx
+  end
+
+end
+
 # All of our outputs will be relative to the `public/`
 # directory.
 output "target/public"
@@ -31,6 +123,10 @@ input "app" do
   # outputs of our handlebars filter are JavaScript files, those
   # will get matched by this block, too.
   match "lib/**/*.js" do
+
+    pass_through = pipeline.copy SortedPipeline
+    pipeline.add_filter pass_through
+
     # The minispade helper wraps each JS file in some code to
     # register it with the [minispade](https://github.com/wycats/minispade)
     # module loader.
@@ -51,7 +147,14 @@ input "app" do
 
     # After being wrapped in the minispade code, we want to concatenate
     # all the javascript files together.
-    concat "js/app.js"
+    if ENV['RAKEP_ENV'] == "production"
+      concat "js/app.js"
+      uglify
+    else
+      concat do |input|
+        input.sub(/lib\//, 'js/')
+      end
+    end
   end
 
   # Now for our stylesheets. We're using Sass. We want to use

@@ -179,6 +179,9 @@
             <argument>exec</argument>
             <argument>rakep</argument>
           </arguments>
+          <environmentVariables>
+            <RAKEP_ENV>production</RAKEP_ENV>
+          </environmentVariables>
         </configuration>
       </plugin>
 

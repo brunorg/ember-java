@@ -11,3 +11,4 @@ gem "rake-pipeline-web-filters", :git => "https://github.com/wycats/rake-pipelin
 
 gem "compass"
 gem "yui-compressor"
+gem "uglifier"
