@@ -3,8 +3,8 @@
 Faz muito tempo que não mexo nessa aplicação. Como não existe nenhuma documentação e nem testes pra me guiar no processo de migração para novas versões eu estou pensando em fazer me guiando pelos seguintes passos:
 
 1. Entrar em cada arquivo JS e listar as funções e funcionalidades da aplicação ✅
-2. Desenhar um modelo de dados que represente os dados da aplicação
-3. Desenhar as telas e as iterações.
+2. Desenhar um modelo de dados que represente os dados da aplicação ✅
+3. Desenhar as telas e as iterações (TODO)
 4. Migrar o backend de JEE para Spring Boot
 5. Jogar fora todo o frontend e reescrevê-lo na nova versão do ember
 
@@ -55,3 +55,46 @@ Contém apenas 4 ícones que indicam os estado de: error, worn, info, ok
     * App.IdField : Campo com o Id do Banco de Dados que não é editável
     * App.IntegerField : Campo que evita digitar caracteres que não são números inteiros
     * App.MoneyField : Representa um campo em formato monetário.
+
+## Model de Dados
+
+![Modelo do Ember Java](ember-java.png)
+
+O modelo está representado na forma de entidade relacionamento mas como será migrado para o MongoDB a representação abaixo em JSON é melhor já que o pedido pode ser uma coleção que contém um array com vários itens de produtos.
+
+```JavaScript
+customer = {
+  id : 123,
+  first_name : "John",
+  last_name : "Doe"
+}
+
+product1 = {
+  id : 1,
+  name : "Duke",
+  description : "Duke, the Java Mascot",
+  price : 3.1415
+}
+
+product2 = {
+  id : 2,
+  name : "Tomster",
+  description : "Tomster, the Ember Mascot",
+  price : 3.14159265359
+}
+
+order = {
+  id : 20,
+  customer_id : 123,
+  creation_date : '2018-03-08T08:15:16.097Z',
+  items : [ 
+    { product_id : 1,
+      quantity : 2
+    },
+    { product_id : 2,
+      quantity : 5
+    },
+  ]
+}
+
+```
