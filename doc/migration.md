@@ -128,7 +128,7 @@ order = {
   id : 20,
   customer_id : 123,
   creation_date : '2018-03-08T08:15:16.097Z',
-  items : [ 
+  items : [
     { product_id : 1,
       quantity : 2
     },
