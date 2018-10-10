@@ -1,0 +1,20 @@
+<div class="row">
+  {{#if hasMessages}}
+    <ul class="msg">
+      {{#each messages.errors as |message|}}
+        <li class="msg msg-error">{{message}}</li>
+      {{/each}}
+      {{#each messages.success as |message|}}
+        <li class="msg msg-success">{{message}}</li>
+      {{/each}}
+      {{#each messages.fieldErrors as |msg|}}
+        <li class="msg msg-error">{{msg.class_name}} {{msg.property}} : {{msg.message}}</li>
+      {{/each}}
+      <li>
+        <button {{action "clearMessages" preventDefault=false}} class="tiny button secondary">
+          <span class="close">✗ Close messages</span>
+        </button>
+      </li>
+    </ul>
+  {{/if}}
+</div>

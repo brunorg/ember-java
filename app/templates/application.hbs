@@ -1,5 +1,26 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<div id="title">
+  <div class="row full-width">
+    <div class="small-6 columns">
+      <h3 class="subheader">Ember - Java REST</h3>
+    </div>
+    <div class="large-5 large-offset-1 columns">
+      {{loading-bar}}
+    </div>
+  </div>
+</div>
 
-{{outlet}}
+<div class="contain-to-grid">
+  {{navigation-bar class="top-bar" role="navigation"}}
+</div>
+
+{{message-notifications}}
+
+<div class="row">
+  {{outlet}}
+</div>
+
+<div id="copyright">
+  <div class="row full-width">
+    <h6 class="subheader">ERJ v{{APP_VERSION}} </h6>
+  </div>
+</div>
