@@ -1,2 +1,33 @@
-<h2>List of Customers</h2>
+{{#link-to customer.new}}<button class="small"> New Customer </button>{{/link-to}}
+<table>
+  <thead>
+    <tr>
+      <th width="100">ID</th>
+      <th>First Name</th>
+      <th width="200">Last Name</th>
+      <th>Orders</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if model.isEmpty}}
+      <tr>
+        <td colspan="5"></td>
+      </tr>
+      <tr>
+        <td colspan="5" class="nodata">No customers found</td>
+      </tr>
+    {{else}}
+      {{#each model as |customer|}}
+        <tr>
+          <td>{{#link-to customers this}} {{customer.id}} {{/link-to}}</td>
+          <td>{{customer.firstName}}</td>
+          <td>{{customer.lastName}}</td>
+          <td>{{customer.orders.length}}</td>
+          <td><button {{action "remove" this}} class="button tiny radius alert"> Delete </button></td>
+        </tr>
+      {{/each}}
+    {{/if}}
+  </tbody>
+</table>
 {{outlet}}
