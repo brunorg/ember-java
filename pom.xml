@@ -25,8 +25,13 @@
       <artifactId>hibernate-validator</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.github.jasminb</groupId>
+      <artifactId>jsonapi-converter</artifactId>
+      <version>0.9</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-rest</artifactId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

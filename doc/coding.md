@@ -45,6 +45,36 @@ installing route...
 $ ember generate route products
 installing route...
 
-$ ember generate route ordersP
+$ ember generate route orders
 installing route...
 ```
+
+## Tela de cliente
+
+Na versão antiga do ember-java as telas eram separadas por rotas bem específicas seguindo esse padrão.
+
+| Rotas         | Tela                                      |
+|---------------|-------------------------------------------|
+| /customers    | Lista de clientes                         |
+| /customer/:id | Lista cliente específico                  |
+| /customer     | Tela em branco pra cadastrar novo cliente |
+
+Na nova versão será usado REST padrão, portanto a mesma URL **/customers** servirá tanto para listar os clientes quanto para cadastrar um novo cliente isso facilitará o desenvolvimento das telas e rotas.
+
+Antes de integrar com o backend do Spring Boot iremos fazer o uso da biblioteca mirage para simular/mockar a integração com uma API, pra isso é necessário instalar o Add On do mirage e um adapter para acessá-lo na aplicação.
+
+```bash
+ember install ember-cli-mirage
+
+ember generate adapter application
+```
+
+Após configurar os adaptadores para a API vamos criar um Model que representa um cliente.
+
+```bash
+ember g model customer
+ember g model order
+```
+
+OBS: Tive que trocar o Spring Data Rest por outra API baseada na especificação JSON:API que possui melhor compatibilidade com o Ember Data, enquanto
+que o padrão utilizado pelo Spring Data Rest é o formato HAL e não existe Adapter do Ember para esse formato.

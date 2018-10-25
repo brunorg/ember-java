@@ -2,21 +2,13 @@ package ember.sample.model;
 
 import java.math.BigDecimal;
 
-import org.springframework.data.annotation.Id;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonRootName("product")
-public class Product {
-
-    @Id
-    private Long id;
+@JsonRootName("products")
+public class Product extends BaseModel {
 
     @Size(max = 24)
     @NotEmpty
@@ -27,14 +19,6 @@ public class Product {
     private String description;
 
     private BigDecimal price;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
