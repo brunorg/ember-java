@@ -3,52 +3,33 @@ package ember.sample.model;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.springframework.data.annotation.Id;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.github.jasminb.jsonapi.annotations.Relationship;
+import com.github.jasminb.jsonapi.annotations.Type;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonRootName("customer")
-public class Customer {
-
-    @Id
-    private Long id;
+@Type("customers")
+public class Customer extends BaseModel {
 
     @Size(max = 24)
     @NotEmpty
-    @JsonProperty("first_name")
+    @JsonProperty("first-name")
     private String firstName;
 
     @Size(max = 24)
     @NotEmpty
-    @JsonProperty("last_name")
+    @JsonProperty("last-name")
     private String lastName;
 
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("order_ids")
+    // @JsonProperty("order-ids")
+    @Relationship("orders")
     private Set<Order> orders = new TreeSet<>();
 
     public Customer() {
-    }
-    
-    public Customer(Long id) {
-        super();
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -67,13 +48,13 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public Set<Order> getOrders() {
-        return orders;
-    }
+    // public Set<Order> getOrders() {
+    //     return orders;
+    // }
 
-    public void setOrders(Set<Order> orders) {
-        this.orders = orders;
-    }
+    // public void setOrders(Set<Order> orders) {
+    //     this.orders = orders;
+    // }
 
 }
 

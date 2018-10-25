@@ -1,38 +1,21 @@
 package ember.sample.model;
 
-import org.springframework.data.annotation.Id;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-@JsonRootName("order_item")
-public class OrderItem {
-
-    @Id
-    private Long id;
+@JsonRootName("items")
+public class OrderItem extends BaseModel {
 
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("order_id")
+    @JsonProperty("order")
     private Order order;
 
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("product_id")
+    @JsonProperty("product")
     private Product product;
 
     private Integer quantity;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Order getOrder() {
         return order;
@@ -42,11 +25,11 @@ public class OrderItem {
         this.order = order;
     }
 
-    @JsonSetter
-    public void setOrder(Long id) {
-        this.order = new Order();
-        this.order.setId(id);
-    }
+    // @JsonSetter
+    // public void setOrder(BigInteger id) {
+    //     this.order = new Order();
+    //     this.order.setId(id);
+    // }
 
     public Product getProduct() {
         return product;
@@ -56,11 +39,11 @@ public class OrderItem {
         this.product = product;
     }
 
-    @JsonSetter
-    public void setProduct(Long id) {
-        this.product = new Product();
-        this.product.setId(id);
-    }
+    // @JsonSetter
+    // public void setProduct(BigInteger id) {
+    //     this.product = new Product();
+    //     this.product.setId(id);
+    // }
 
     public Integer getQuantity() {
         return quantity;

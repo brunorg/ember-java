@@ -11,7 +11,7 @@
         <li class="msg msg-error">{{msg.class_name}} {{msg.property}} : {{msg.message}}</li>
       {{/each}}
       <li>
-        <button {{action "clearMessages" preventDefault=false}} class="tiny button secondary">
+        <button {{action "clearMessages" bubbles=false}} class="tiny button secondary">
           <span class="close">✗ Close messages</span>
         </button>
       </li>
