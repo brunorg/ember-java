@@ -78,3 +78,7 @@ ember g model order
 
 OBS: Tive que trocar o Spring Data Rest por outra API baseada na especificação JSON:API que possui melhor compatibilidade com o Ember Data, enquanto
 que o padrão utilizado pelo Spring Data Rest é o formato HAL e não existe Adapter do Ember para esse formato.
+
+## Novas alterações
+
+A partir desse ponto o registro de alterações do projeto serão feitos através de pull requests no github.

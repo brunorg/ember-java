@@ -1,4 +1,7 @@
-{{#link-to customer.new}}<button class="small"> New Customer </button>{{/link-to}}
+{{#link-to "customers.edit" "new" }}<button class="button small"> New Customer </button>{{/link-to}}
+
+{{outlet}}
+
 <table>
   <thead>
     <tr>
@@ -20,14 +23,13 @@
     {{else}}
       {{#each model as |customer|}}
         <tr>
-          <td>{{#link-to customers this}} {{customer.id}} {{/link-to}}</td>
+          <td>{{#link-to "customers.edit" customer}} {{customer.id}} {{/link-to}}</td>
           <td>{{customer.firstName}}</td>
           <td>{{customer.lastName}}</td>
           <td>{{customer.orders.length}}</td>
-          <td><button {{action "remove" this}} class="button tiny radius alert"> Delete </button></td>
+          <td><button {{action "remove" customer}} class="button tiny radius alert"> Delete </button></td>
         </tr>
       {{/each}}
     {{/if}}
   </tbody>
 </table>
-{{outlet}}
