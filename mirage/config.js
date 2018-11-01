@@ -55,7 +55,7 @@ export default function () {
 
   this.get('/customers', function () {
     let filteredCustomers = customers.filter(function (i) {
-      return i.attributes.deleted !== false;
+      return i.attributes.deleted !== true;
     });
     return { "data": filteredCustomers }
   });
@@ -66,13 +66,10 @@ export default function () {
     };
   });
 
-  this.delete('/customers/:id', function (db, request) {
-    customers.find((customer) => request.params.id === customer.id).deleted = false;
 
-    let filteredCustomers = customers.filter(function (i) {
-      return i.attributes.deleted !== false;
-    });
-    return { "data": filteredCustomers }
+  this.delete('/customers/:id', function (db, request) {
+    customers.find((customer) => request.params.id === customer.id).deleted = true;
+    return { "data":  null};
   });
 
 }
