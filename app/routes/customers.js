@@ -5,7 +5,8 @@ export default Route.extend({
     return this.store.findAll('customer');
   },
   actions: {
-    remove(data) {
+    remove(record) {
+      return record.destroyRecord();
     }
   }
 });

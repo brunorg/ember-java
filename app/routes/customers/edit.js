@@ -19,7 +19,7 @@ export default Route.extend({
   },
   actions: {
     update(data) {
-      this.store.createRecord('customer', data);
+      data.save();
     }
   }
 });
