@@ -1,3 +1,5 @@
+import Mirage from 'ember-cli-mirage';
+
 export default function () {
 
   // These comments are here to help you get started. Feel free to delete them.
@@ -53,6 +55,19 @@ export default function () {
     }
   ];
 
+  let generateGuid = function () {
+    var result, i, j;
+    result = '';
+    for (j = 0; j < 24; j++) {
+      if (j == 8 || j == 12 || j == 16 || j == 20) {
+        result = result + '';
+      }
+      i = Math.floor(Math.random() * 16).toString(16).toUpperCase();
+      result = result + i;
+    }
+    return result.toLowerCase();
+  };
+
   this.get('/customers', function () {
     let filteredCustomers = customers.filter(function (i) {
       return i.attributes.deleted !== true;
@@ -61,11 +76,35 @@ export default function () {
   });
 
   this.get('/customers/:id', function (db, request) {
-    return {
-      data: customers.find((customer) => request.params.id === customer.id)
-    };
+    if (request.id) {
+      return {
+        data: customers.find((customer) => request.params.id === customer.id)
+      };
+    } else{
+      return new Mirage.Response(404);
+    }
+
   });
 
+  this.post('/customers', function (db, request) {
+    let newCustomer = {
+      data: {
+        "type": "customers",
+          "id": generateGuid(),
+            "attributes": {
+          "first-name": request.firstName,
+            "last-name": request.lastName
+        },
+        "relationships": {
+          "orders": {
+            "data": []
+          }
+        }
+      }
+    }
+    customers.push(newCustomer.data);
+    return newCustomer;
+  });
 
   this.delete('/customers/:id', function (db, request) {
     customers.find((customer) => request.params.id === customer.id).deleted = true;

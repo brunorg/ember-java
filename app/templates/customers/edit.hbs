@@ -29,8 +29,9 @@
       <button class="button small radius disabled" disabled="disabled"> Update </button>
     {{/if}}
   {{else}}
-    <button {{action "update" model}} class="button small radius actives"> Save </button>
+    <button {{action "update" model}} class="button small radius active"> Save </button>
   {{/if}}
+  <button {{action "cancel" model}} class="button small radius secondary"> Cancel </button>
 
 </fieldset>
 
