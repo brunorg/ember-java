@@ -55,6 +55,42 @@ export default function () {
     }
   ];
 
+  let products = [
+    {
+      "type": "products",
+      "id": "2bc6abcdbe44d1cc32f86b4b",
+      "attributes": {
+        "name": "Sapiens",
+        "description": "Sapiens: A Brief History of Humankind",
+        "price": 26.84
+      },
+      "relationships": {
+      }
+    },
+    {
+      "type": "products",
+      "id": "356abcdbe4454e1d1ccf86bb",
+      "attributes": {
+        "name": "Pride and Prejudice",
+        "description": "'Vanity, not love, has been my folly'",
+        "price": 25.81
+      },
+      "relationships": {
+      }
+    },
+    {
+      "type": "products",
+      "id": "11d1ccf86bb4e1d1ccf86bb1",
+      "attributes": {
+        "name": "1984",
+        "description": "Nineteen Eighty-Four",
+        "price": 29.90
+      },
+      "relationships": {
+      }
+    }
+  ];
+
   let generateGuid = function () {
     var result, i, j;
     result = '';
@@ -67,6 +103,10 @@ export default function () {
     }
     return result.toLowerCase();
   };
+
+  /////////////
+  // Customers
+  /////////////
 
   this.get('/customers', function () {
     let filteredCustomers = customers.filter(function (i) {
@@ -109,6 +149,51 @@ export default function () {
   this.delete('/customers/:id', function (db, request) {
     customers.find((customer) => request.params.id === customer.id).deleted = true;
     return { "data":  null};
+  });
+
+  /////////////
+  // Products
+  /////////////
+
+  this.get('/products', function () {
+    let filteredProducts = products.filter(function (i) {
+      return i.attributes.deleted !== true;
+    });
+    return { "data": filteredProducts }
+  });
+
+  this.get('/products/:id', function (db, request) {
+    if (request.id) {
+      return {
+        data: products.find((product) => request.params.id === product.id)
+      };
+    } else {
+      return new Mirage.Response(404);
+    }
+
+  });
+
+  this.post('/products', function (db, request) {
+    let newProduct = {
+      data: {
+        "type": "products",
+        "id": generateGuid(),
+        "attributes": {
+          "name": request.name,
+          "description": request.description,
+          "price": request.price
+        },
+        "relationships": {
+        }
+      }
+    }
+    products.push(newProduct.data);
+    return newProduct;
+  });
+
+  this.delete('/products/:id', function (db, request) {
+    products.find((product) => request.params.id === product.id).deleted = true;
+    return { "data": null };
   });
 
 }

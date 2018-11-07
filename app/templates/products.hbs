@@ -1,1 +1,35 @@
+{{#link-to "products.edit" "new" }}<button class="button small"> New Product </button>{{/link-to}}
+
 {{outlet}}
+
+<table>
+  <thead>
+    <tr>
+      <th width="100">ID</th>
+      <th>Name</th>
+      <th width="200">Description</th>
+      <th>Price</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if model.isEmpty}}
+      <tr>
+        <td colspan="5"></td>
+      </tr>
+      <tr>
+        <td colspan="5" class="nodata">No products found</td>
+      </tr>
+    {{else}}
+      {{#each model as |product|}}
+        <tr>
+          <td>{{#link-to "products.edit" product}} {{product.id}} {{/link-to}}</td>
+          <td>{{product.name}}</td>
+          <td>{{product.description}}</td>
+          <td>{{product.price}}</td>
+          <td><button {{action "remove" product}} class="button tiny radius alert"> Delete </button></td>
+        </tr>
+      {{/each}}
+    {{/if}}
+  </tbody>
+</table>
