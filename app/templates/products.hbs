@@ -26,7 +26,7 @@
           <td>{{#link-to "products.edit" product}} {{product.id}} {{/link-to}}</td>
           <td>{{product.name}}</td>
           <td>{{product.description}}</td>
-          <td>{{product.price}}</td>
+          <td>{{format-currency product.price}}</td>
           <td><button {{action "remove" product}} class="button tiny radius alert"> Delete </button></td>
         </tr>
       {{/each}}
