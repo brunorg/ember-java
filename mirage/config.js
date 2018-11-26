@@ -1,4 +1,5 @@
 import Mirage from 'ember-cli-mirage';
+import { v1 as uuid } from 'uuid';
 
 export default function () {
 
@@ -29,7 +30,7 @@ export default function () {
   let customers = [
     {
       "type": "customers",
-      "id": "5bc6a8948e54e1d1ccf86b4b",
+      "id": uuid(),
       "attributes": {
         "first-name": "John",
         "last-name": "Doe"
@@ -42,7 +43,7 @@ export default function () {
     },
     {
       "type": "customers",
-      "id": "4566a8948e54e1d1ccf86b4b",
+      "id": uuid(),
       "attributes": {
         "first-name": "Frodo",
         "last-name": "Baggins"
@@ -58,7 +59,7 @@ export default function () {
   let products = [
     {
       "type": "products",
-      "id": "2bc6abcdbe44d1cc32f86b4b",
+      "id": uuid(),
       "attributes": {
         "name": "Sapiens",
         "description": "Sapiens: A Brief History of Humankind",
@@ -69,7 +70,7 @@ export default function () {
     },
     {
       "type": "products",
-      "id": "356abcdbe4454e1d1ccf86bb",
+      "id": uuid(),
       "attributes": {
         "name": "Pride and Prejudice",
         "description": "'Vanity, not love, has been my folly'",
@@ -80,7 +81,7 @@ export default function () {
     },
     {
       "type": "products",
-      "id": "11d1ccf86bb4e1d1ccf86bb1",
+      "id": uuid(),
       "attributes": {
         "name": "1984",
         "description": "Nineteen Eighty-Four",
@@ -90,19 +91,6 @@ export default function () {
       }
     }
   ];
-
-  let generateGuid = function () {
-    var result, i, j;
-    result = '';
-    for (j = 0; j < 24; j++) {
-      if (j == 8 || j == 12 || j == 16 || j == 20) {
-        result = result + '';
-      }
-      i = Math.floor(Math.random() * 16).toString(16).toUpperCase();
-      result = result + i;
-    }
-    return result.toLowerCase();
-  };
 
   /////////////
   // Customers
@@ -130,7 +118,7 @@ export default function () {
     let newCustomer = {
       data: {
         "type": "customers",
-          "id": generateGuid(),
+        "id": uuid(),
             "attributes": {
           "first-name": request.firstName,
             "last-name": request.lastName
@@ -177,7 +165,7 @@ export default function () {
     let newProduct = {
       data: {
         "type": "products",
-        "id": generateGuid(),
+        "id": uuid(),
         "attributes": {
           "name": request.name,
           "description": request.description,
