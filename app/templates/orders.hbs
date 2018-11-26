@@ -1,1 +1,39 @@
+{{#link-to "orders.edit" "new" }}<button class="button small"> New Order </button>{{/link-to}}
+
 {{outlet}}
+
+<table>
+  <thead>
+    <tr>
+      <th width="100">ID</th>
+      <th width="200">Customer</th>
+      <th>Creation Date</th>
+      <th>Items</th>
+      <th>Items Qty</th>
+      <th>Total</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if model.isEmpty}}
+      <tr>
+        <td colspan="7"></td>
+      </tr>
+      <tr>
+        <td colspan="7" class="nodata">No orders found</td>
+      </tr>
+    {{else}}
+      {{#each model as |order|}}
+        <tr>
+          <td>{{#link-to "orders.edit" order}} {{order.id}} {{/link-to}}</td>
+          <td>{{order.customer.fullName}}</td>
+          <td>{{order.creationDate}}</td>
+          <td>{{order.items.length}}</td>
+          <td>{{order.totalItems}}</td>
+          <td>{{money order.totalPrice}}</td>
+          <td><button {{action "remove" order}} class="button tiny radius alert"> Delete </button></td>
+        </tr>
+      {{/each}}
+    {{/if}}
+  </tbody>
+</table>
