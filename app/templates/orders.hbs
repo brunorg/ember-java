@@ -30,7 +30,7 @@
           <td>{{order.creationDate}}</td>
           <td>{{order.items.length}}</td>
           <td>{{order.totalItems}}</td>
-          <td>{{money order.totalPrice}}</td>
+          <td>{{format-currency order.totalPrice}}</td>
           <td><button {{action "remove" order}} class="button tiny radius alert"> Delete </button></td>
         </tr>
       {{/each}}
