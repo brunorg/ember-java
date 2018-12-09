@@ -1,0 +1,13 @@
+<button class="label" {{action "launchModal"}}>{{text}}</button>
+
+{{#if confirmShown}}
+  <div class="modal modal--active">
+    <div class="panel callout radius select">
+      <div>{{yield}}</div>
+      <div class="grid-x grid-padding-x align-spaced">
+        <button class="success button" {{action "submitConfirm"}}>OK</button>
+        <button class="alert button" {{action "cancelConfirm"}}>Cancel</button>
+      </div>
+    </div>
+  </div>
+{{/if}}

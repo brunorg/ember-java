@@ -101,3 +101,23 @@ td.total {
   color: #696a0e;
   background: url(images/icon-warn.png) 5px 5px no-repeat #fdfee1;
 }
+
+.modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #00000030;
+    top: 0;
+    left: 0;
+    /* display: none; */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .5s;
+    padding: 10%;
+}
+
+.modal--active {
+    opacity: 1;
+    pointer-events: all;
+    /* display: block; */
+}
