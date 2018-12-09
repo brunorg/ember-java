@@ -1,1 +1,122 @@
+<fieldset>
+  <legend>Order</legend>
+
+  <div class="row grid-x grid-padding-x">
+    <div class="cell small-2">
+      <label>Id</label>
+    </div>
+    <div class="cell small-4">
+      <h5>{{#if model.id}} {{model.id}} {{else}} New {{/if}}</h5>
+    </div>
+  </div>
+
+  <div class="row grid-x grid-padding-x">
+    <div class="cell small-2">
+      <label>Customer</label>
+    </div>
+    <div class="cell small-4">
+      <h5>{{#if model.customer.id}} {{model.customer.id}} {{else}} No customers selected {{/if}}</h5>
+    </div>
+    <div class="cell small-4">
+      {{#select-modal text="Select Customer"}}
+      <div>
+        {{#each this}}
+        <div class="tiny button secondary expand" {{action "selectCustomer" this}}>
+          {{fullName}}
+        </div>
+        {{else}}
+        <div> No customers found </div>
+        {{/each}}
+      </div>
+      {{/select-modal}}
+    </div>
+  </div>
+
+  <div class="grid-x grid-padding-x">
+    <div class="cell small-2">
+      <label>Total Order Cost:</label>
+    </div>
+    <div class="cell small-4">
+      <h5 class="secondary">{{#if model.id}}{{money model.totalPrice}}{{/if}}</h5>
+    </div>
+    <div class="cell small-4">
+      {{#select-modal text="Add Items"}}
+      <div>
+        {{#each this}}
+        <div class="tiny button secondary expand" {{action "selectItem" this}}>
+          {{fullName}}
+        </div>
+        {{else}}
+        <div> No items found </div>
+        {{/each}}
+      </div>
+      {{/select-modal}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <table>
+        <thead>
+          <tr>
+            <th width="150">Product Name</th>
+            <th width="300">Product Desc</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Total</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each model.items as |item|}}
+          <tr>
+            <td>{{item.product.name}}</td>
+            <td>{{item.product.description}}</td>
+            <td>{{money item.product.price}}</td>
+            <td>{{input value=item.quantity class="light" placeholder="Quantity"}}</td>
+            <td>{{money item.totalPrice}}</td>
+            {{!-- <td><button {{action deleteItem this}} class="button tiny radius alert"> Delete </button></td> --}}
+          </tr>
+          {{else}}
+          <tr>
+            <td colspan="6"></td>
+          </tr>
+          <tr>
+            <td colspan="6" class="nodata">No itens added</td>
+          </tr>
+          {{/each}}
+          {{#if totalItems}}
+          <tr>
+            <td colspan="3" class="total">
+              <h5 class="secondary right">Grand Total</h5>
+            </td>
+            <td class="total">
+              {{!-- <h5 class="secondary">{{totalItems}}</h5> --}}
+            </td>
+            <td class="total">
+              {{!-- <h5 class="secondary">{{money totalPrice}}</h5> --}}
+            </td>
+            <td class="total"></td>
+          </tr>
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {{#if model.id}}
+    {{#if model.hasDirtyAttributes}}
+      <button {{action "update" model}} class="button small radius active"> Update </button>
+    {{else}}
+      <button class="button small radius disabled" disabled="disabled"> Update </button>
+    {{/if}}
+  {{else}}
+    <button {{action "update" model}} class="button small radius active"> Save </button>
+  {{/if}}
+  <button {{action "cancel" model}} class="button small radius secondary"> Cancel </button>
+
+</fieldset>
+
+<hr>
+
 {{outlet}}
