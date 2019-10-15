@@ -15,19 +15,40 @@
       <label>Customer</label>
     </div>
     <div class="cell small-4">
-      <h5>{{#if model.customer.id}} {{model.customer.id}} {{else}} No customers selected {{/if}}</h5>
+      <h5>
+        {{#if model.customer.id}}
+          {{model.customer.firstName}} {{customer.lastName}}
+        {{else}}
+          No customers selected
+        {{/if}}
+      </h5>
     </div>
     <div class="cell small-4">
-      {{#select-modal text="Select Customer"}}
-      <div>
-        {{#each this}}
-        <div class="tiny button secondary expand" {{action "selectCustomer" this}}>
-          {{fullName}}
-        </div>
-        {{else}}
-        <div> No customers found </div>
-        {{/each}}
-      </div>
+      {{#select-modal
+        filter=(action "filterCustomers")
+        text="Select Customer"
+        as |results|
+      }}
+        <table>
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each results as |customer|}}
+              <tr {{action "selectCustomer" customer}}>
+                <td>{{customer.firstName}}</td>
+                <td>{{customer.lastName}}</td>
+              </tr>
+            {{else}}
+              <tr>
+                <td colspan="2"> No customers found </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
       {{/select-modal}}
     </div>
   </div>
@@ -40,21 +61,41 @@
       <h5 class="secondary">{{#if model.id}}{{money model.totalPrice}}{{/if}}</h5>
     </div>
     <div class="cell small-4">
-      {{#select-modal text="Add Items"}}
-      <div>
-        {{#each this}}
-        <div class="tiny button secondary expand" {{action "selectItem" this}}>
-          {{fullName}}
-        </div>
-        {{else}}
-        <div> No items found </div>
-        {{/each}}
-      </div>
+      {{#select-modal
+        filter=(action "filterProducts")
+        text="Select Items"
+        as |results|
+      }}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each results as |product|}}
+              <tr {{action "selectProduct" product}}>
+                <td>{{product.name}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.price}}</td>
+              </tr>
+            {{else}}
+              <tr>
+                <td colspan="2"> No products found </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
       {{/select-modal}}
     </div>
   </div>
 
   <div class="row">
+    <div class="row">
+      <span>&nbsp;</span>
+    </div>
     <div class="large-12 columns">
       <table>
         <thead>
@@ -69,35 +110,35 @@
         </thead>
         <tbody>
           {{#each model.items as |item|}}
-          <tr>
-            <td>{{item.product.name}}</td>
-            <td>{{item.product.description}}</td>
-            <td>{{money item.product.price}}</td>
-            <td>{{input value=item.quantity class="light" placeholder="Quantity"}}</td>
-            <td>{{money item.totalPrice}}</td>
-            {{!-- <td><button {{action deleteItem this}} class="button tiny radius alert"> Delete </button></td> --}}
-          </tr>
+            <tr>
+              <td>{{item.product.name}}</td>
+              <td>{{item.product.description}}</td>
+              <td>{{format-currency item.product.price}}</td>
+              <td>{{input value=item.quantity class="light" placeholder="Quantity"}}</td>
+              <td>{{format-currency item.totalPrice}}</td>
+              {{!-- <td><button {{action deleteItem this}} class="button tiny radius alert"> Delete </button></td> --}}
+            </tr>
           {{else}}
-          <tr>
-            <td colspan="6"></td>
-          </tr>
-          <tr>
-            <td colspan="6" class="nodata">No itens added</td>
-          </tr>
+            <tr>
+              <td colspan="6"></td>
+            </tr>
+            <tr>
+              <td colspan="6" class="nodata">No itens added</td>
+            </tr>
           {{/each}}
           {{#if totalItems}}
-          <tr>
-            <td colspan="3" class="total">
-              <h5 class="secondary right">Grand Total</h5>
-            </td>
-            <td class="total">
-              {{!-- <h5 class="secondary">{{totalItems}}</h5> --}}
-            </td>
-            <td class="total">
-              {{!-- <h5 class="secondary">{{money totalPrice}}</h5> --}}
-            </td>
-            <td class="total"></td>
-          </tr>
+            <tr>
+              <td colspan="3" class="total">
+                <h5 class="secondary right">Grand Total</h5>
+              </td>
+              <td class="total">
+                {{!-- <h5 class="secondary">{{totalItems}}</h5> --}}
+              </td>
+              <td class="total">
+                {{!-- <h5 class="secondary">{{money totalPrice}}</h5> --}}
+              </td>
+              <td class="total"></td>
+            </tr>
           {{/if}}
         </tbody>
       </table>

@@ -11,7 +11,7 @@
       <th>Items</th>
       <th>Items Qty</th>
       <th>Total</th>
-      <th> </th>
+      <th>X</th>
     </tr>
   </thead>
   <tbody>
@@ -26,8 +26,9 @@
       {{#each model as |order|}}
         <tr>
           <td>{{#link-to "orders.edit" order}} {{order.id}} {{/link-to}}</td>
-          <td>{{order.customer.fullName}}</td>
+          <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
           <td>{{order.creationDate}}</td>
+          <td>{{order.totalQuantity}}</td>
           <td>{{order.items.length}}</td>
           <td>{{order.totalItems}}</td>
           <td>{{format-currency order.totalPrice}}</td>
