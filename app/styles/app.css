@@ -121,3 +121,7 @@ td.total {
     pointer-events: all;
     /* display: block; */
 }
+
+.callout {
+    height: 80% !important;
+}

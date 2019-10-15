@@ -3,8 +3,11 @@
 {{#if confirmShown}}
   <div class="modal modal--active">
     <div class="panel callout radius select">
-      <div>{{yield}}</div>
+      <div>{{yield results}}</div>
       <div class="grid-x grid-padding-x align-spaced">
+        <div class="row">
+          {{input type="text" class="light" placeholder="Search..." value=search input=(action "query")}}
+        </div>
         <button class="success button" {{action "submitConfirm"}}>OK</button>
         <button class="alert button" {{action "cancelConfirm"}}>Cancel</button>
       </div>
