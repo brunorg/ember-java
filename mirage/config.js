@@ -92,14 +92,32 @@ export default function () {
     }
   ];
 
+  let orders = [];
+
   /////////////
   // Customers
   /////////////
 
-  this.get('/customers', function () {
+  this.get('/customers', function (db, request) {
+    if (request.queryParams) {
+      let name = request.queryParams.name;
+
+      if (name) {
+        return {
+          data: customers.filter(function(i) {
+            return i.attributes["first-name"]
+              .concat(" ")
+              .concat(i.attributes["last-name"]).toLowerCase()
+              .includes(name.toLowerCase());
+          })
+        };
+      }
+    }
+
     let filteredCustomers = customers.filter(function (i) {
       return i.attributes.deleted !== true;
     });
+
     return { "data": filteredCustomers }
   });
 
@@ -143,7 +161,21 @@ export default function () {
   // Products
   /////////////
 
-  this.get('/products', function () {
+  this.get('/products', function (db, request) {
+    if (request.queryParams) {
+      let name = request.queryParams.name;
+
+      if (name) {
+        return {
+          data: products.filter(function(i) {
+            return i.attributes["name"]
+              .toLowerCase()
+              .includes(name.toLowerCase());
+          })
+        };
+      }
+    }
+
     let filteredProducts = products.filter(function (i) {
       return i.attributes.deleted !== true;
     });
@@ -184,4 +216,50 @@ export default function () {
     return { "data": null };
   });
 
+
+  /////////////
+  // Orders
+  /////////////
+
+  this.get('/orders', function () {
+    let filteredOrders = orders.filter(function (i) {
+      return i.attributes.deleted !== true;
+    });
+    return { "data": filteredOrders }
+  });
+
+  this.get('/orders/:id', function (db, request) {
+    if (request.id) {
+      return {
+        data: orders.find((order) => request.params.id === order.id)
+      };
+    } else {
+      return new Mirage.Response(404);
+    }
+
+  });
+
+  this.post('/orders', function (db, request) {
+    let newOrder = {
+      data: {
+        "type": "orders",
+        "id": uuid(),
+        "attributes": {
+          "customer": request.creationDate,
+          "creationDate": request.price
+        },
+        "relationships": {
+        }
+      }
+    };
+    orders.push(newOrder.data);
+    return newOrder;
+  });
+
+  this.delete('/orders/:id', function (db, request) {
+    orders.find((order) => request.params.id === order.id).deleted = true;
+    return { "data": null };
+  });
+
 }
+
