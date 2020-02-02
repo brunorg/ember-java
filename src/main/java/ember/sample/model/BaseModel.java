@@ -7,7 +7,7 @@ import com.github.jasminb.jsonapi.annotations.Meta;
 public class BaseModel {
     @Id
     @org.springframework.data.annotation.Id
-    private String id;
+    protected String id;
 
     @Meta
     private Meta meta;
