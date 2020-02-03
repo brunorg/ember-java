@@ -18,7 +18,10 @@ public class Application {
     return new WebMvcConfigurer () {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/customers").allowedOrigins("http://localhost:4200");
+        registry.addMapping("/customers").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH");
+        registry.addMapping("/customers/{id}").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH");
+        registry.addMapping("/products").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH");
+        registry.addMapping("/products/{id}").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH");
       }
     };
   }

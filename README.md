@@ -3,6 +3,7 @@
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
 
+```Markdown
     It was a long time since I wrote this code. On that time Ember already was a mature framework, while React had just been born.
     Now this project is outdated, Ember received a lot of changes and new features, moreover, on Java land both JEE and Spring mainly the last with spring-boot made the developer life less complicated ( well, to do more and write less code ).
 
@@ -12,6 +13,7 @@ A short introduction of this app could easily go here.
     - Spring Boot
     - MongoDB
     - Docker (maybe)
+```
 
 ## Prerequisites
 
@@ -21,6 +23,7 @@ You will need the following things properly installed on your computer.
 * [Node.js](https://nodejs.org/) (with npm)
 * [Ember CLI](https://ember-cli.com/)
 * [Google Chrome](https://google.com/chrome/)
+* [Docker](https://docs.docker.com/get-started/)
 
 ## Installation
 
@@ -30,9 +33,21 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-* Visit your tests at [http://localhost:4200/tests](http://localhost:4200/tests).
+### Running Mongo on Docker
+
+```bash
+$ docker-compose -f "docker-compose.yml" up -d --build
+...
+... done
+```
+
+### Running the Ember Server
+
+```bash
+$ ember serve
+⠏ building...
+Build successful (15309ms) – Serving on http://localhost:4200/
+```
 
 ### Code Generators
 

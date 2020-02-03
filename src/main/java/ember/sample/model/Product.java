@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.github.jasminb.jsonapi.annotations.Type;
 
-@JsonRootName("products")
+@Type("products")
 public class Product extends BaseModel {
 
     @Size(max = 24)
@@ -43,5 +43,10 @@ public class Product extends BaseModel {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+  @Override
+  public String toString() {
+    return String.format("Produtc [id=%s, name='%s', description='%s', price='%s']", id, name, description, price);
+  }
 
 }
