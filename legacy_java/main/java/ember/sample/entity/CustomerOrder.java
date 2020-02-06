@@ -1,6 +1,6 @@
 package ember.sample.entity;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -40,7 +40,7 @@ public class CustomerOrder {
     @Temporal(TemporalType.TIMESTAMP)
     @Column
     @JsonProperty("creation_date")
-    private Calendar creationDate;
+    private LocalDateTime creationDate;
 
     @OneToMany(mappedBy = "customerOrder")
     @JsonIdentityReference(alwaysAsId = true)
@@ -68,11 +68,11 @@ public class CustomerOrder {
         this.customer = new Customer(id);
     }
 
-    public Calendar getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Calendar creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

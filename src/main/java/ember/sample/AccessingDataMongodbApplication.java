@@ -11,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ember.sample.model.Customer;
 import ember.sample.model.Product;
 import ember.sample.repository.CustomerRepository;
+import ember.sample.repository.OrderItemRepository;
+import ember.sample.repository.OrderRepository;
 import ember.sample.repository.ProductRepository;
 
 @SpringBootApplication
@@ -22,6 +24,12 @@ public class AccessingDataMongodbApplication implements CommandLineRunner {
   @Autowired
   private ProductRepository productRepository;
 
+  @Autowired
+  private OrderRepository orderRepository;
+
+  @Autowired
+  private OrderItemRepository orderItemRepository;
+
   public static void main(String[] args) {
     SpringApplication.run(AccessingDataMongodbApplication.class, args);
   }
@@ -31,6 +39,8 @@ public class AccessingDataMongodbApplication implements CommandLineRunner {
 
     repository.deleteAll();
     productRepository.deleteAll();
+    orderItemRepository.deleteAll();
+    orderRepository.deleteAll();
 
     // save a couple of customers
     Customer john = new Customer();

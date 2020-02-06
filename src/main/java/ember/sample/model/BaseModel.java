@@ -14,4 +14,9 @@ public class BaseModel {
 
     @com.github.jasminb.jsonapi.annotations.Links
     private Links links;
+
+    public String getId() {
+      return id;
+    }
+
 }

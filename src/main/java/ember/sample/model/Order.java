@@ -1,10 +1,11 @@
 package ember.sample.model;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.jasminb.jsonapi.annotations.Relationship;
 import com.github.jasminb.jsonapi.annotations.Type;
 
 @Type("orders")
@@ -12,13 +13,15 @@ public class Order extends BaseModel {
 
     // @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("customer")
+    @Relationship("customer")
     private Customer customer;
 
     @JsonProperty("creation-date")
-    private Calendar creationDate;
+    private LocalDateTime creationDate;
 
     // @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("items")
+    @Relationship("items")
     private Set<OrderItem> items = new TreeSet<>();
 
     public Customer getCustomer() {
@@ -29,11 +32,11 @@ public class Order extends BaseModel {
         this.customer = customer;
     }
 
-    public Calendar getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Calendar creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

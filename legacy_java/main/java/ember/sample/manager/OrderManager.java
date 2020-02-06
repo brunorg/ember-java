@@ -1,7 +1,7 @@
 package ember.sample.manager;
 
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -15,11 +15,11 @@ public class OrderManager extends Manager<CustomerOrder, Long> {
 
     @Inject
     private ProductManager productManager;
-    
+
     @Override
     public CustomerOrder save(CustomerOrder order) {
         order.setId(null);
-        order.setCreationDate(Calendar.getInstance());
+        order.setCreationDate(LocalDateTime.now());
         EntityManager entityManager = getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(order);
@@ -40,7 +40,7 @@ public class OrderManager extends Manager<CustomerOrder, Long> {
             item.setCustomerOrder(order);
             item.setProduct(productManager.find(item.getProduct().getId()));
             entityManager.persist(item);
-        }        
+        }
         entityManager.getTransaction().commit();
         return items;
     }

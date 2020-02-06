@@ -2,17 +2,20 @@ package ember.sample.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.github.jasminb.jsonapi.annotations.Relationship;
+import com.github.jasminb.jsonapi.annotations.Type;
 
-@JsonRootName("items")
+@Type("order-items")
 public class OrderItem extends BaseModel {
 
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("order")
+    @Relationship("order")
     private Order order;
 
     @JsonIdentityReference(alwaysAsId = true)
     @JsonProperty("product")
+    @Relationship("product")
     private Product product;
 
     private Integer quantity;
