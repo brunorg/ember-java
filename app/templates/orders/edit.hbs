@@ -58,7 +58,7 @@
       <label>Total Order Cost:</label>
     </div>
     <div class="cell small-4">
-      <h5 class="secondary">{{#if model.id}}{{money model.totalPrice}}{{/if}}</h5>
+      <h5 class="secondary">{{#if model.id}}{{format-currency model.totalPrice}}{{/if}}</h5>
     </div>
     <div class="cell small-4">
       {{#select-modal
@@ -135,7 +135,7 @@
                 {{!-- <h5 class="secondary">{{totalItems}}</h5> --}}
               </td>
               <td class="total">
-                {{!-- <h5 class="secondary">{{money totalPrice}}</h5> --}}
+                {{!-- <h5 class="secondary">{{format-currency totalPrice}}</h5> --}}
               </td>
               <td class="total"></td>
             </tr>
