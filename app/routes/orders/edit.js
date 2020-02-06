@@ -10,12 +10,20 @@ export default Route.extend({
     });
   },
   actions: {
-    update(order) {
+    async update(order) {
       if (order.id) {
         order.save();
       } else {
         let newOrder = this.store.createRecord("order", order);
-        newOrder.save();
+        order.items.fore
+        await newOrder.save();
+
+        let promises = order.items.map((item) => {
+          item.set('order-item', parent);
+          return item.save();
+        })
+
+        await Promise.all(promises);
       }
     },
     cancel(order) {
