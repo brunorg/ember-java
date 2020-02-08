@@ -11,7 +11,7 @@ export default Component.extend({
 
   actions: {
     query() {
-      var query = this.get('search');
+      var query = this.search;
       this.filter(query).then(results => this.set("results", results));
     },
 

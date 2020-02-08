@@ -1,11 +1,11 @@
-import DS from 'ember-data';
+import Model, { belongsTo, attr } from '@ember-data/model';
 import { computed } from "@ember/object";
 
-export default DS.Model.extend({
-  order: DS.belongsTo("order"),
-  product: DS.belongsTo("product"),
-  quantity: DS.attr(),
+export default Model.extend({
+  order: belongsTo("order"),
+  product: belongsTo("product"),
+  quantity: attr(),
   totalPrice: computed("product", "quantity", function() {
-    return this.get("product.price") * this.get("quantity");
+    return this.get("product.price") * this.quantity;
   })
 });
