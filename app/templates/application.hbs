@@ -4,16 +4,16 @@
       <h3 class="subheader">Ember - Java REST</h3>
     </div>
     <div class="large-5 large-offset-1 columns">
-      {{loading-bar}}
+      <LoadingBar />
     </div>
   </div>
 </div>
 
 <div class="contain-to-grid">
-  {{navigation-bar class="top-bar" role="navigation"}}
+  <NavigationBar @class="top-bar" @role="navigation" />
 </div>
 
-{{message-notifications}}
+<MessageNotifications />
 
 <div class="row">
   {{outlet}}

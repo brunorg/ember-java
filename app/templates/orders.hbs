@@ -1,4 +1,4 @@
-{{#link-to "orders.edit" "new" }}<button class="button small"> New Order </button>{{/link-to}}
+<LinkTo @route="orders.edit" @model="new"><button class="button small"> New Order </button></LinkTo>
 
 {{outlet}}
 
@@ -25,7 +25,7 @@
     {{else}}
       {{#each model as |order|}}
         <tr>
-          <td>{{#link-to "orders.edit" order}} {{order.id}} {{/link-to}}</td>
+          <td><LinkTo @route="orders.edit" @model={{order}}> {{order.id}} </LinkTo></td>
           <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
           <td>{{order.creationDate}}</td>
           <td>{{order.totalQuantity}}</td>

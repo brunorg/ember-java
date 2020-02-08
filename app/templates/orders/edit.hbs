@@ -24,11 +24,7 @@
       </h5>
     </div>
     <div class="cell small-4">
-      {{#select-modal
-        filter=(action "filterCustomers")
-        text="Select Customer"
-        as |results|
-      }}
+      <SelectModal @filter={{action "filterCustomers"}} @text="Select Customer" as |results|>
         <table>
           <thead>
             <tr>
@@ -38,7 +34,7 @@
           </thead>
           <tbody>
             {{#each results as |customer|}}
-              <tr {{action "selectCustomer" customer}}>
+              <tr {{action "selectCustomer" customer}} role="button">
                 <td>{{customer.firstName}}</td>
                 <td>{{customer.lastName}}</td>
               </tr>
@@ -49,7 +45,7 @@
             {{/each}}
           </tbody>
         </table>
-      {{/select-modal}}
+      </SelectModal>
     </div>
   </div>
 
@@ -61,11 +57,7 @@
       <h5 class="secondary">{{#if model.id}}{{format-currency model.totalPrice}}{{/if}}</h5>
     </div>
     <div class="cell small-4">
-      {{#select-modal
-        filter=(action "filterProducts")
-        text="Select Items"
-        as |results|
-      }}
+      <SelectModal @filter={{action "filterProducts"}} @text="Select Items" as |results|>
         <table>
           <thead>
             <tr>
@@ -76,7 +68,7 @@
           </thead>
           <tbody>
             {{#each results as |product|}}
-              <tr {{action "selectProduct" product}}>
+              <tr {{action "selectProduct" product}} role="button">
                 <td>{{product.name}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.price}}</td>
@@ -88,7 +80,7 @@
             {{/each}}
           </tbody>
         </table>
-      {{/select-modal}}
+      </SelectModal>
     </div>
   </div>
 
@@ -114,7 +106,7 @@
               <td>{{item.product.name}}</td>
               <td>{{item.product.description}}</td>
               <td>{{format-currency item.product.price}}</td>
-              <td>{{input value=item.quantity class="light" placeholder="Quantity"}}</td>
+              <td><Input @value={{item.quantity}} class="light" placeholder="Quantity" /></td>
               <td>{{format-currency item.totalPrice}}</td>
               {{!-- <td><button {{action deleteItem this}} class="button tiny radius alert"> Delete </button></td> --}}
             </tr>

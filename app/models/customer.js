@@ -1,11 +1,11 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 import { computed } from "@ember/object";
 
-export default DS.Model.extend({
-  firstName: DS.attr(),
-  lastName: DS.attr(),
-  orders: DS.hasMany("order"),
+export default Model.extend({
+  firstName: attr(),
+  lastName: attr(),
+  orders: hasMany("order"),
   fullName: computed("firstName", "lastName", function() {
-    return `${this.get("firstName")} ${this.get("lastName")}`;
+    return `${this.firstName} ${this.lastName}`;
   })
 });
