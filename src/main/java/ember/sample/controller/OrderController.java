@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.jasminb.jsonapi.DeserializationFeature;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 import com.github.jasminb.jsonapi.ResourceConverter;
+import com.github.jasminb.jsonapi.SerializationSettings;
 import com.github.jasminb.jsonapi.exceptions.DocumentSerializationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,9 @@ class OrderController {
   public byte[] all() throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
     List<Order> findAll = repository.findAll();
     findAll.forEach(order -> { order.setCustomer( customerRepository.findById(order.getCustomer().getId()).get() ); });
-    return converter.writeDocumentCollection(new JSONAPIDocument<List<Order>>(findAll));
+    SerializationSettings.Builder result = new SerializationSettings.Builder();
+    result.includeRelationship("customer");
+    return converter.writeDocumentCollection(new JSONAPIDocument<List<Order>>(findAll), result.build());
   }
 
   @GetMapping("/orders/{id}")

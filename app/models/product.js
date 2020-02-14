@@ -1,7 +1,7 @@
-import Model, { attr } from '@ember-data/model';
+import Model, { attr } from "@ember-data/model";
 
-export default Model.extend({
-  name: attr(),
-  description: attr(),
-  price: attr()
-});
+export default class ProductModel extends Model {
+  @attr name;
+  @attr description;
+  @attr price;
+}

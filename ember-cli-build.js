@@ -5,9 +5,9 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
-    'ember-cli-foundation-6': {
+    "ember-cli-foundation-6": {
       css: true,
-      js: true
+      js: false
     }
   });
 

@@ -1,0 +1,15 @@
+<tr>
+  <td><LinkTo @route="orders.edit" @model={{@order}}> {{@order.id}} </LinkTo></td>
+  <td>
+    {{#if this.customerLoaded}}
+      {{this.customerFullName}}
+    {{/if}}
+  </td>
+  <td>{{@order.creationDate}}</td>
+  <td>{{@order.totalQuantity}}</td>
+  <td>{{@order.items.length}}</td>
+  <td>{{@order.totalItems}}</td>
+  <td>{{format-currency @order.totalPrice}}</td>
+  <td><button type="button" {{action "remove" @order}} class="button tiny radius alert"> Delete </button></td>
+</tr>
+{{yield}}

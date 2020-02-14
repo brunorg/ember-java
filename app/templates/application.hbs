@@ -1,26 +1,28 @@
-<div id="title">
-  <div class="row full-width">
-    <div class="small-6 columns">
-      <h3 class="subheader">Ember - Java REST</h3>
-    </div>
-    <div class="large-5 large-offset-1 columns">
-      <LoadingBar />
+<div class="ember-view">
+  <div id="title">
+    <div class="row full-width">
+      <div class="small-6 columns">
+        <h3 class="subheader">Ember - Java REST</h3>
+      </div>
+      <div class="large-5 large-offset-1 columns">
+        <LoadingBar />
+      </div>
     </div>
   </div>
-</div>
 
-<div class="contain-to-grid">
-  <NavigationBar @class="top-bar" @role="navigation" />
-</div>
+  <div class="contain-to-grid">
+    <NavigationBar @class="top-bar" @role="navigation" />
+  </div>
 
-<MessageNotifications />
+  <MessageNotifications />
 
-<div class="row">
-  {{outlet}}
-</div>
+  <div class="row">
+    {{outlet}}
+  </div>
 
-<div id="copyright">
-  <div class="row full-width">
-    <h6 class="subheader">ERJ v{{APP_VERSION}} </h6>
+  <div id="copyright">
+    <div class="row full-width">
+      <h6 class="subheader">ERJ {{concat "v" (app-version versionOnly=true)}} </h6>
+    </div>
   </div>
 </div>
