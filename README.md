@@ -12,7 +12,7 @@ A short introduction of this app could easily go here.
     - Ember cli
     - Spring Boot
     - MongoDB
-    - Docker (maybe)
+    - Docker
 ```
 
 ## Prerequisites
@@ -29,25 +29,51 @@ You will need the following things properly installed on your computer.
 
 * `git clone <repository-url>` this repository
 * `cd ember-java`
-* `npm install`
+* `yarn install`
 
 ## Running / Development
 
-### Running Mongo on Docker
+### 1. Running Mongo Database with Docker
+
+If swarm is not running, run this command first:
 
 ```bash
-$ docker-compose -f "docker-compose.yml" up -d --build
+$ docker swarm init
 ...
 ... done
 ```
 
-### Running the Ember Server
+Then, start the mongo stack:
+
+```bash
+$ docker stack deploy --compose-file docker-compose.yml mongo
+...
+... done
+```
+
+### 2. Running the spring-boot java backend server
+
+```bash
+$ mvn springboot:run
+[INFO] Scanning for projects...
+...
+... Started Application in 5.216 seconds ...
+```
+
+### 3. Running the Ember Server
 
 ```bash
 $ ember serve
 ⠏ building...
 Build successful (15309ms) – Serving on http://localhost:4200/
 ```
+
+### 4. Accessing the application
+
+Now you can access the application on http://localhost:4200/
+
+
+## More information: 
 
 ### Code Generators
 
