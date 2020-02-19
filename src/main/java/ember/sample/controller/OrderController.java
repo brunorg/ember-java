@@ -10,6 +10,10 @@ import com.github.jasminb.jsonapi.ResourceConverter;
 import com.github.jasminb.jsonapi.exceptions.DocumentSerializationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -97,13 +101,20 @@ class OrderController {
       throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
     converter.disableDeserializationOption(DeserializationFeature.REQUIRE_RESOURCE_ID);
     OrderItem orderItem = converter.readDocument(document, OrderItem.class).get();
-    Order order = repository.findById(orderItem.getOrder().getId()).get();
-
     OrderItem newOrderItem = orderItemRepository.insert(orderItem);
-    order.getItems().add(newOrderItem);
-    repository.save(order);
+    addItem(newOrderItem);
 
     return converter.writeDocument(new JSONAPIDocument<OrderItem>(newOrderItem));
+  }
+
+  @Autowired
+  private MongoTemplate mongoTemplate;
+
+  public void addItem(OrderItem item) {
+    Query query = new Query(Criteria.where("id").is(item.getOrder().getId()));
+    Update update = new Update().addToSet("items", item);
+
+    mongoTemplate.updateFirst(query, update, Order.class);
   }
 
 }
