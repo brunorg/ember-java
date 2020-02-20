@@ -2,11 +2,13 @@ package ember.sample.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.jasminb.jsonapi.DeserializationFeature;
 import com.github.jasminb.jsonapi.JSONAPIDocument;
 import com.github.jasminb.jsonapi.ResourceConverter;
+import com.github.jasminb.jsonapi.SerializationSettings;
 import com.github.jasminb.jsonapi.exceptions.DocumentSerializationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ember.sample.exception.ResourceNotFoundException;
@@ -46,10 +49,12 @@ class OrderController {
   private ResourceConverter converter;
 
   @GetMapping("/orders")
-  public byte[] all() throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
+  public byte[] all(@RequestParam("include") Optional<List<String>> include) throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
     List<Order> findAll = repository.findAll();
     findAll.forEach(order -> { order.setCustomer( customerRepository.findById(order.getCustomer().getId()).get() ); });
-    return converter.writeDocumentCollection(new JSONAPIDocument<List<Order>>(findAll));
+    SerializationSettings.Builder result = new SerializationSettings.Builder();
+    include.ifPresent(values ->  values.forEach(v -> result.includeRelationship(v)));
+    return converter.writeDocumentCollection(new JSONAPIDocument<List<Order>>(findAll), result.build());
   }
 
   @GetMapping("/orders/{id}")
