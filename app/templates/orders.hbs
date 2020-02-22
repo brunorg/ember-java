@@ -1,4 +1,4 @@
-<LinkTo @route="orders.edit" @model="new"><button class="button small"> New Order </button></LinkTo>
+<LinkTo @route="orders.edit" @model="new"><button type="button" class="button small"> New Order </button></LinkTo>
 
 {{outlet}}
 
@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#if model.isEmpty}}
+    {{#if this.model.isEmpty}}
       <tr>
         <td colspan="7"></td>
       </tr>
@@ -23,7 +23,7 @@
         <td colspan="7" class="nodata">No orders found</td>
       </tr>
     {{else}}
-      {{#each model as |order|}}
+      {{#each this.model as |order|}}
         <tr>
           <td><LinkTo @route="orders.edit" @model={{order}}> {{order.id}} </LinkTo></td>
           <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
