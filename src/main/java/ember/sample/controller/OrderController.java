@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ember.sample.exception.ResourceNotFoundException;
@@ -89,9 +91,9 @@ class OrderController {
   }
 
   @DeleteMapping("/orders/{id}")
-  public byte[] delete(@PathVariable String id) throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void delete(@PathVariable String id) throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
     repository.deleteById(id);
-    return converter.writeDocument(new JSONAPIDocument<Order>());
   }
 
   @GetMapping("/order-items/{id}")

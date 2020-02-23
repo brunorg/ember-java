@@ -1,12 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 
-export default Route.extend({
+export default class OrdersRoute extends Route {
   model() {
-    return this.store.findAll('order', { include: 'customer' });
-  },
-  actions: {
-    remove(record) {
-      return record.destroyRecord();
-    }
+    return this.store.findAll("order", { include: "customer" });
   }
-});
+}

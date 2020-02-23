@@ -1,12 +1,7 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 
-export default Route.extend({
+export default class ProductsRoute extends Route {
   model() {
-    return this.store.findAll('product');
-  },
-  actions: {
-    remove(record) {
-      return record.destroyRecord();
-    }
+    return this.store.findAll("product");
   }
-});
+}

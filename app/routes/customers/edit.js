@@ -1,30 +1,14 @@
-import Route from '@ember/routing/route';
+import Route from "@ember/routing/route";
 
-export default Route.extend({
+export default class CustomersEditRoute extends Route {
   model(params) {
-    if (params.customer_id == 'new') {
+    if (params.customer_id == "new") {
       return {};
     }
-    return this.store.findRecord('customer', params.customer_id).catch(function () {
-      return {};
-    });
-  },
-  actions: {
-    update(customer) {
-      if (customer.id) {
-        customer.save();
-      } else {
-        let newCustomer = this.store.createRecord('customer', customer);
-        newCustomer.save();
-      }
-    },
-    cancel(customer) {
-      if (customer.id) {
-        if (customer.get('hasDirtyAttributes')) {
-          customer.rollbackAttributes();
-        }
-      }
-      this.transitionTo('customers');
-    }
+    return this.store
+      .findRecord("customer", params.customer_id)
+      .catch(function() {
+        return {};
+      });
   }
-});
+}
