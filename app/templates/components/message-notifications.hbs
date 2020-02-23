@@ -1,17 +1,17 @@
 <div class="row">
-  {{#if hasMessages}}
+  {{#if this.hasMessages}}
     <ul class="msg">
-      {{#each messages.errors as |message|}}
+      {{#each this.messages.errors as |message|}}
         <li class="msg msg-error">{{message}}</li>
       {{/each}}
-      {{#each messages.success as |message|}}
+      {{#each this.messages.success as |message|}}
         <li class="msg msg-success">{{message}}</li>
       {{/each}}
-      {{#each messages.fieldErrors as |msg|}}
+      {{#each this.messages.fieldErrors as |msg|}}
         <li class="msg msg-error">{{msg.class_name}} {{msg.property}} : {{msg.message}}</li>
       {{/each}}
       <li>
-        <button {{on "click" clearMessages}} class="tiny button secondary">
+        <button type="button" {{on "click" this.clearMessages}} class="tiny button secondary">
           <span class="close">✗ Close messages</span>
         </button>
       </li>

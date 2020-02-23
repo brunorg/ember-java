@@ -4,34 +4,34 @@
   <div class="row">
     <div class="large-4 columns">
       <label>Id</label>
-      <h5>{{#if model.id}} {{model.id}} {{else}} New {{/if}}</h5>
+      <h5>{{#if this.model.id}} {{this.model.id}} {{else}} New {{/if}}</h5>
     </div>
   </div>
 
   <div class="row">
     <div class="large-10 columns">
       <label>First Name</label>
-      <Input @value={{model.firstName}} class="light" placeholder="First Name" />
+      <Input @value={{this.model.firstName}} class="light" placeholder="First Name" />
     </div>
   </div>
 
   <div class="row">
     <div class="large-10 columns">
       <label>Last Name</label>
-      <Input @value={{model.lastName}} class="light" placeholder="Last Name" />
+      <Input @value={{this.model.lastName}} class="light" placeholder="Last Name" />
     </div>
   </div>
 
-  {{#if model.id}}
-    {{#if model.hasDirtyAttributes}}
-      <button {{action "update" model}} class="button small radius active"> Update </button>
+  {{#if this.model.id}}
+    {{#if this.model.hasDirtyAttributes}}
+      <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Update </button>
     {{else}}
-      <button class="button small radius disabled" disabled="disabled"> Update </button>
+      <button type="button" class="button small radius disabled" disabled="disabled"> Update </button>
     {{/if}}
   {{else}}
-    <button {{action "update" model}} class="button small radius active"> Save </button>
+    <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Save </button>
   {{/if}}
-  <button {{action "cancel" model}} class="button small radius secondary"> Cancel </button>
+  <button type="button" {{on "click" (fn this.cancel this.model)}} class="button small radius secondary"> Cancel </button>
 
 </fieldset>
 

@@ -1,15 +1,15 @@
-<button class="label" {{action "launchModal"}}>{{text}}</button>
+<button type="button" class="label" {{on "click" this.launchModal}}>{{@text}}</button>
 
-{{#if confirmShown}}
+{{#if this.confirmShown}}
   <div class="modal modal--active">
     <div class="panel callout radius select">
-      <div>{{yield results}}</div>
+      <div>{{yield this.results}}</div>
       <div class="grid-x grid-padding-x align-spaced">
         <div class="row">
-          <Input @type="text" class="light" placeholder="Search..." @value={{search}} @input={{action "query"}} />
+          <Input @type="text" class="light" placeholder="Search..." @value={{this.search}} @input={{this.query}} />
         </div>
-        <button class="success button" {{action "submitConfirm"}}>OK</button>
-        <button class="alert button" {{action "cancelConfirm"}}>Cancel</button>
+        <button type="button" class="success button" {{on "click" this.submitConfirm}}>OK</button>
+        <button type="button" class="alert button" {{on "click" this.cancelConfirm}}>Cancel</button>
       </div>
     </div>
   </div>

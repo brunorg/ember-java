@@ -1,4 +1,4 @@
-<LinkTo @route="products.edit" @model="new"><button class="button small"> New Product </button></LinkTo>
+<LinkTo @route="products.edit" @model="new"><button type="button" class="button small"> New Product </button></LinkTo>
 
 {{outlet}}
 
@@ -13,7 +13,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#if model.isEmpty}}
+    {{#if this.model.isEmpty}}
       <tr>
         <td colspan="5"></td>
       </tr>
@@ -21,13 +21,13 @@
         <td colspan="5" class="nodata">No products found</td>
       </tr>
     {{else}}
-      {{#each model as |product|}}
+      {{#each this.model as |product|}}
         <tr>
           <td><LinkTo @route="products.edit" @model={{product}}> {{product.id}} </LinkTo></td>
           <td>{{product.name}}</td>
           <td>{{product.description}}</td>
           <td>{{format-currency product.price}}</td>
-          <td><button {{action "remove" product}} class="button tiny radius alert"> Delete </button></td>
+          <td><button type="button" {{on "click" (fn this.remove product)}} class="button tiny radius alert"> Delete </button></td>
         </tr>
       {{/each}}
     {{/if}}

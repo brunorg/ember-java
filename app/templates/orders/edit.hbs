@@ -6,7 +6,7 @@
       <label>Id</label>
     </div>
     <div class="cell small-4">
-      <h5>{{#if model.id}} {{model.id}} {{else}} New {{/if}}</h5>
+      <h5>{{#if this.model.id}} {{this.model.id}} {{else}} New {{/if}}</h5>
     </div>
   </div>
 
@@ -16,15 +16,15 @@
     </div>
     <div class="cell small-4">
       <h5>
-        {{#if model.customer.id}}
-          {{model.customer.firstName}} {{customer.lastName}}
+        {{#if this.model.customer.id}}
+          {{this.model.customer.firstName}} {{this.model.customer.lastName}}
         {{else}}
           No customers selected
         {{/if}}
       </h5>
     </div>
     <div class="cell small-4">
-      <SelectModal @filter={{action "filterCustomers"}} @text="Select Customer" as |results|>
+      <SelectModal @filter={{this.filterCustomers}} @text="Select Customer" as |results|>
         <table>
           <thead>
             <tr>
@@ -34,7 +34,7 @@
           </thead>
           <tbody>
             {{#each results as |customer|}}
-              <tr {{action "selectCustomer" customer}} role="button">
+              <tr {{on "click" (fn this.selectCustomer customer)}} role="button">
                 <td>{{customer.firstName}}</td>
                 <td>{{customer.lastName}}</td>
               </tr>
@@ -54,10 +54,10 @@
       <label>Total Order Cost:</label>
     </div>
     <div class="cell small-4">
-      <h5 class="secondary">{{#if model.id}}{{format-currency model.totalPrice}}{{/if}}</h5>
+      <h5 class="secondary">{{#if this.model.id}}{{format-currency this.model.totalPrice}}{{/if}}</h5>
     </div>
     <div class="cell small-4">
-      <SelectModal @filter={{action "filterProducts"}} @text="Select Items" as |results|>
+      <SelectModal @filter={{this.filterProducts}} @text="Select Items" as |results|>
         <table>
           <thead>
             <tr>
@@ -68,7 +68,7 @@
           </thead>
           <tbody>
             {{#each results as |product|}}
-              <tr {{action "selectProduct" product}} role="button">
+              <tr {{on "click" (fn this.selectProduct product)}} role="button">
                 <td>{{product.name}}</td>
                 <td>{{product.description}}</td>
                 <td>{{product.price}}</td>
@@ -101,7 +101,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each model.items as |item|}}
+          {{#each this.model.items as |item|}}
             <tr>
               <td>{{item.product.name}}</td>
               <td>{{item.product.description}}</td>
@@ -118,7 +118,7 @@
               <td colspan="6" class="nodata">No itens added</td>
             </tr>
           {{/each}}
-          {{#if totalItems}}
+          {{#if this.totalItems}}
             <tr>
               <td colspan="3" class="total">
                 <h5 class="secondary right">Grand Total</h5>
@@ -137,16 +137,16 @@
     </div>
   </div>
 
-  {{#if model.id}}
-    {{#if model.hasDirtyAttributes}}
-      <button {{action "update" model}} class="button small radius active"> Update </button>
+  {{#if this.model.id}}
+    {{#if this.model.hasDirtyAttributes}}
+      <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Update </button>
     {{else}}
-      <button class="button small radius disabled" disabled="disabled"> Update </button>
+      <button type="button" class="button small radius disabled" disabled="disabled"> Update </button>
     {{/if}}
   {{else}}
-    <button {{action "update" model}} class="button small radius active"> Save </button>
+    <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Save </button>
   {{/if}}
-  <button {{action "cancel" model}} class="button small radius secondary"> Cancel </button>
+  <button type="button" {{on "click" (fn this.cancel this.model)}} class="button small radius secondary"> Cancel </button>
 
 </fieldset>
 
