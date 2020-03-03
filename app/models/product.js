@@ -1,7 +1,14 @@
+import classic from 'ember-classic-decorator';
 import Model, { attr } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr(),
-  description: attr(),
-  price: attr()
-});
+@classic
+export default class Product extends Model {
+  @attr()
+  name;
+
+  @attr()
+  description;
+
+  @attr()
+  price;
+}

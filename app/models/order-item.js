@@ -1,11 +1,20 @@
+import classic from 'ember-classic-decorator';
+import { computed } from '@ember/object';
 import Model, { belongsTo, attr } from '@ember-data/model';
-import { computed } from "@ember/object";
 
-export default Model.extend({
-  order: belongsTo("order"),
-  product: belongsTo("product"),
-  quantity: attr(),
-  totalPrice: computed("product", "quantity", function() {
+@classic
+export default class OrderItem extends Model {
+  @belongsTo("order")
+  order;
+
+  @belongsTo("product")
+  product;
+
+  @attr()
+  quantity;
+
+  @computed("product", "quantity")
+  get totalPrice() {
     return this.get("product.price") * this.quantity;
-  })
-});
+  }
+}
