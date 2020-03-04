@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { click, render } from '@ember/test-helpers';
+import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | message-notifications', function(hooks) {
   setupRenderingTest(hooks);
@@ -10,17 +10,39 @@ module('Integration | Component | message-notifications', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
-    await render(hbs`{{message-notifications}}`);
+    await render(hbs`<MessageNotifications />`);
 
-    assert.dom(this.element).hasText('');
+    assert.equal(this.element.textContent.trim(), '');
 
     // Template block usage:
     await render(hbs`
-      {{#message-notifications}}
+      <MessageNotifications>
         template block text
-      {{/message-notifications}}
+      </MessageNotifications>
     `);
 
-    assert.dom(this.element).hasText('template block text');
+    assert.equal(this.element.textContent.trim(), 'template block text');
+
+    const messaging = this.owner.lookup('service:messaging');
+
+    messaging.addError('This is an error!!!');
+
+    await render(hbs`<MessageNotifications />`);
+
+    assert.equal(
+      this.element.querySelector('.msg .msg-error').textContent.trim(),
+      'This is an error!!!',
+      'First message notificaion is an error'
+    );
+
+    //Click on the button
+    await click('#closeMessages');
+
+    assert.equal(
+      this.element.querySelector(".row").textContent.trim(),
+      "",
+      "No more messages after clear messages"
+    );
+
   });
 });

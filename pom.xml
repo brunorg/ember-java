@@ -15,7 +15,7 @@
   </parent>
 
   <properties>
-    <java.version>1.8</java.version>
+    <maven.compiler.release>11</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
