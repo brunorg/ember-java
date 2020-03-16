@@ -1,23 +1,31 @@
-<div id="title">
-  <div class="row full-width">
-    <div class="small-6 columns">
-      <h3 class="subheader">Ember - Java REST</h3>
+<div id="header" class="fixed-top p-3 header">
+  <p>&nbsp;</p>
+</div>
+<div id="header-filler" class="p-3" style="z-index: 5;">
+  <p>&nbsp;</p>
+</div>
+
+<div id="title" class="fixed-top p-2 m-2 bg-info shadow rounded">
+  <h3 class="subheader">Ember - Java REST</h3>
+</div>
+
+<div class="container" style="z-index: 10;" >
+  <div class="row">
+    <div class="col">
+      <NavigationBar class="top-bar" role="navigation" />
     </div>
-    <div class="large-5 large-offset-1 columns">
+  </div>
+
+  <div class="row">
+    <div class="col">
+      {{outlet}}
     </div>
   </div>
 </div>
 
-<div class="contain-to-grid">
-  <NavigationBar class="top-bar" role="navigation" />
+<div id="footer-filler" class="p-1" style="z-index: 5;">
+  <h6>&nbsp;</h6>
 </div>
-
-<div class="row">
-  {{outlet}}
-</div>
-
-<div id="copyright">
-  <div class="row full-width">
-    <h6 class="subheader">ERJ {{concat "v" (app-version versionOnly=true)}} </h6>
-  </div>
+<div id="copyright" class="fixed-bottom p-1 bg-info">
+  <h6 class="subheader">ERJ {{concat "v" (app-version versionOnly=true)}} </h6>
 </div>

@@ -1,4 +1,13 @@
-h1, h2, h3, h4, h5, h6 {
+body {
+  height: 100vh;
+  background: fixed linear-gradient(to bottom, #0a3c87 0%, #b1c8e9 10%, #f7e1cd 30%, #fff6ee 100%);
+}
+
+.header {
+  background: fixed linear-gradient(to bottom, #0a3c87 0%, #b1c8e9 10%, #f7e1cd 30%, #fff6ee 100%);
+}
+
+/* h1, h2, h3, h4, h5, h6 {
   color: #ddd !important;
 }
 
@@ -100,7 +109,7 @@ td.total {
   border: 1px solid #696a0e;
   color: #696a0e;
   background: url(images/icon-warn.png) 5px 5px no-repeat #fdfee1;
-}
+} */
 
 .modal {
     width: 100%;
