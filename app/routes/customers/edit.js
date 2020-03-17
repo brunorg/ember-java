@@ -1,9 +1,8 @@
 import Route from "@ember/routing/route";
+import { action } from '@ember/object';
 
 export default class CustomersEditRoute extends Route {
   model(params) {
-    this.controllerFor("customers").set("collapsed", false);
-
     if (params.customer_id == "new") {
       return {};
     }
@@ -12,5 +11,10 @@ export default class CustomersEditRoute extends Route {
       .catch(function() {
         return {};
       });
+  }
+
+  @action
+  didTransition() {
+    this.controllerFor("customers").set("collapsed", false);
   }
 }

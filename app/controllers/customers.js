@@ -1,8 +1,10 @@
 import Controller from "@ember/controller";
 import { action } from "@ember/object";
 import { tracked } from "@glimmer/tracking";
+import { inject as service } from "@ember/service";
 
 export default class CustomersController extends Controller {
+  @service messaging;
   @tracked collapsed = true;
 
   @action
@@ -17,6 +19,10 @@ export default class CustomersController extends Controller {
 
   @action
   remove(record) {
-    return record.destroyRecord();
+    let messaging = this.messaging;
+
+    return record.destroyRecord().catch(function(reason) {
+        messaging.addError(reason);
+      });
   }
 }
