@@ -27,7 +27,7 @@ export default class OrdersEditController extends Controller {
         order.rollbackAttributes();
       }
     }
-    this.transitionTo("orders");
+    this.transitionToRoute("orders");
   }
 
   @action

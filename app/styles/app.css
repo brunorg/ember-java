@@ -7,6 +7,23 @@ body {
   background: fixed linear-gradient(to bottom, #0a3c87 0%, #b1c8e9 10%, #f7e1cd 30%, #fff6ee 100%);
 }
 
+#header-filler, #footer-filler {
+  z-index: 50;
+}
+
+#app-body {
+  z-index: 100;
+}
+
+.table .thead-light th {
+    background-color: #ffbb73;
+    border-color: #e3aa6d;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 161, 255, 0.10);
+}
+
 /* h1, h2, h3, h4, h5, h6 {
   color: #ddd !important;
 }

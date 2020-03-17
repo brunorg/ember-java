@@ -1,39 +1,35 @@
-<fieldset class="large-8 columns">
-  <legend>Customer</legend>
+  <div class="form-group row">
+    <legend class="col-sm-12 col-form-label"><h3>{{if this.model.id "Editing Customer" "Creating New Customer"}}</h3></legend>
+  </div>
 
-  <div class="row">
-    <div class="large-4 columns">
-      <label>Id</label>
-      <h5>{{#if this.model.id}} {{this.model.id}} {{else}} New {{/if}}</h5>
+  <div class="form-group row">
+    <label for="pk" class="col-sm-2 col-form-label">Id</label>
+    <div class="col-sm-10">
+      <input id="pk" type="text" value={{this.model.id}} class="form-control" placeholder="New" disabled="disabled">
     </div>
   </div>
 
-  <div class="row">
-    <div class="large-10 columns">
-      <label>First Name</label>
-      <Input @value={{this.model.firstName}} class="light" placeholder="First Name" />
+  <div class="form-group row">
+    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+    <div class="col-sm-10">
+      <Input id="firstName" @value={{this.model.firstName}} class="form-control" placeholder="First Name" />
     </div>
   </div>
 
-  <div class="row">
-    <div class="large-10 columns">
-      <label>Last Name</label>
-      <Input @value={{this.model.lastName}} class="light" placeholder="Last Name" />
+  <div class="form-group row">
+    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+    <div class="col-sm-10">
+      <Input id="lastName" @value={{this.model.lastName}} class="form-control" placeholder="Last Name" />
     </div>
   </div>
 
   {{#if this.model.id}}
     {{#if this.model.hasDirtyAttributes}}
-      <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Update </button>
+      <button type="button" {{on "click" (fn this.update this.model)}} class="btn btn-primary btn-sm"> Update </button>
     {{else}}
-      <button type="button" class="button small radius disabled" disabled="disabled"> Update </button>
+      <button type="button" class="btn btn-primary btn-sm" disabled="disabled"> Update </button>
     {{/if}}
   {{else}}
-    <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Save </button>
+    <button type="button" {{on "click" (fn this.update this.model)}} class="btn btn-primary btn-sm"> Save </button>
   {{/if}}
-  <button type="button" {{on "click" (fn this.cancel this.model)}} class="button small radius secondary"> Cancel </button>
-
-</fieldset>
-
-<hr>
 {{outlet}}
