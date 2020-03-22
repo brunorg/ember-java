@@ -1,40 +1,44 @@
-<LinkTo @route="orders.edit" @model="new"><button type="button" class="button small"> New Order </button></LinkTo>
+<ToggleEditor @route="orders.edit" @title="New Order" @collapsed={{this.collapsed}} @toggle={{this.toggle}} />
 
-{{outlet}}
-
-<table>
-  <thead>
-    <tr>
-      <th width="100">ID</th>
-      <th width="200">Customer</th>
-      <th>Creation Date</th>
-      <th>Items</th>
-      <th>Items Qty</th>
-      <th>Total</th>
-      <th>X</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#if this.model.isEmpty}}
-      <tr>
-        <td colspan="7"></td>
-      </tr>
-      <tr>
-        <td colspan="7" class="nodata">No orders found</td>
-      </tr>
-    {{else}}
-      {{#each this.model as |order|}}
+<BsCollapse @collapsed={{this.notCollapsed}}>
+  <div class="well">
+    <table class="table table-striped">
+      <thead class="thead-light">
         <tr>
-          <td><LinkTo @route="orders.edit" @model={{order}}> {{order.id}} </LinkTo></td>
-          <td>{{order.customer.firstName}} {{order.customer.lastName}}</td>
-          <td>{{order.creationDate}}</td>
-          <td>{{order.totalQuantity}}</td>
-          <td>{{order.items.length}}</td>
-          <td>{{order.totalItems}}</td>
-          <td>{{format-currency order.totalPrice}}</td>
-          <td><button type="button" {{on "click" (fn this.remove order)}} class="button tiny radius alert"> Delete </button></td>
+          <th scope="col" width="100">ID</th>
+          <th scope="col" width="200">Customer</th>
+          <th scope="col">Creation Date</th>
+          <th scope="col">Items</th>
+          <th scope="col">Items Qty</th>
+          <th scope="col">Total</th>
+          <th scope="col">X</th>
         </tr>
-      {{/each}}
-    {{/if}}
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+        {{#each this.model as |order|}}
+        <tr>
+          <th scope="row">
+            <LinkTo @route="orders.edit" @model={{order}} {{on "click" this.openEditor}}> {{order.id}} </LinkTo>
+          </th>
+          <td>{{order.customer.fullName}}</td>
+          <td>{{to-locale-date order.creationDate}}</td>
+          <td>{{order.items.length}}</td>
+          <td>{{order.totalQuantity}}</td>
+          <td>{{format-currency order.totalPrice}}</td>
+          <td><button type="button" {{on "click" (fn this.remove order)}} class="btn btn-danger btn-sm"> Delete </button>
+          </td>
+        </tr>
+        {{else}}
+        <tr>
+          <td colspan="7"></td>
+        </tr>
+        <tr>
+          <td colspan="7" class="nodata">
+            <h3>No orders found</h3>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</BsCollapse>

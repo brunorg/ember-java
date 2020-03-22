@@ -13,7 +13,7 @@ export default class OrderItem extends Model {
   @attr()
   quantity;
 
-  @computed("product", "quantity")
+  @computed("product.price", "quantity")
   get totalPrice() {
     return this.get("product.price") * this.quantity;
   }

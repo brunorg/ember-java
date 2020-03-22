@@ -1,155 +1,113 @@
-<fieldset>
-  <legend>Order</legend>
+<div class="form-group row">
+  <legend class="col-sm-12 col-form-label">
+    <h3>{{if this.model.id "Editing Order" "Creating New Order"}}</h3>
+  </legend>
+</div>
 
-  <div class="row grid-x grid-padding-x">
-    <div class="cell small-2">
-      <label>Id</label>
-    </div>
-    <div class="cell small-4">
-      <h5>{{#if this.model.id}} {{this.model.id}} {{else}} New {{/if}}</h5>
-    </div>
+<div class="form-group row">
+  <label for="pk" class="col-sm-2 col-form-label">Id</label>
+  <div class="col-sm-10">
+    <input id="pk" type="text" value={{this.model.id}} class="form-control" placeholder="New" disabled="disabled">
   </div>
+</div>
 
-  <div class="row grid-x grid-padding-x">
-    <div class="cell small-2">
-      <label>Customer</label>
-    </div>
-    <div class="cell small-4">
-      <h5>
-        {{#if this.model.customer.id}}
-          {{this.model.customer.firstName}} {{this.model.customer.lastName}}
-        {{else}}
-          No customers selected
-        {{/if}}
-      </h5>
-    </div>
-    <div class="cell small-4">
-      <SelectModal @filter={{this.filterCustomers}} @text="Select Customer" as |results|>
-        <table>
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each results as |customer|}}
-              <tr {{on "click" (fn this.selectCustomer customer)}} role="button">
-                <td>{{customer.firstName}}</td>
-                <td>{{customer.lastName}}</td>
-              </tr>
-            {{else}}
-              <tr>
-                <td colspan="2"> No customers found </td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </SelectModal>
-    </div>
+<div class="form-group row">
+  <label for="customer" class="col-sm-2 col-form-label">Customer</label>
+  <div class="col-sm-8">
+    <input id="customer" type="text" value={{if this.model.customer.id (concat this.model.customer.firstName " " this.model.customer.lastName) ""}} class="form-control" placeholder="Click to Choose Customer" readonly="readonly" {{on "click" (fn this.onCreate "customerModal")}} role="button">
   </div>
-
-  <div class="grid-x grid-padding-x">
-    <div class="cell small-2">
-      <label>Total Order Cost:</label>
-    </div>
-    <div class="cell small-4">
-      <h5 class="secondary">{{#if this.model.id}}{{format-currency this.model.totalPrice}}{{/if}}</h5>
-    </div>
-    <div class="cell small-4">
-      <SelectModal @filter={{this.filterProducts}} @text="Select Items" as |results|>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each results as |product|}}
-              <tr {{on "click" (fn this.selectProduct product)}} role="button">
-                <td>{{product.name}}</td>
-                <td>{{product.description}}</td>
-                <td>{{product.price}}</td>
-              </tr>
-            {{else}}
-              <tr>
-                <td colspan="2"> No products found </td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </SelectModal>
-    </div>
+  <div class="col-sm-2">
+    <button type="button" {{on "click" (fn this.onCreate "customerModal")}} class="btn btn-primary btn"> {{if this.model.customer.id "Change" "Select"}} Customer</button>
   </div>
+</div>
 
-  <div class="row">
-    <div class="row">
-      <span>&nbsp;</span>
-    </div>
-    <div class="large-12 columns">
-      <table>
-        <thead>
-          <tr>
-            <th width="150">Product Name</th>
-            <th width="300">Product Desc</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th>Total</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.model.items as |item|}}
-            <tr>
-              <td>{{item.product.name}}</td>
-              <td>{{item.product.description}}</td>
-              <td>{{format-currency item.product.price}}</td>
-              <td><Input @value={{item.quantity}} class="light" placeholder="Quantity" /></td>
-              <td>{{format-currency item.totalPrice}}</td>
-              {{!-- <td><button {{action deleteItem this}} class="button tiny radius alert"> Delete </button></td> --}}
-            </tr>
-          {{else}}
-            <tr>
-              <td colspan="6"></td>
-            </tr>
-            <tr>
-              <td colspan="6" class="nodata">No itens added</td>
-            </tr>
-          {{/each}}
-          {{#if this.totalItems}}
-            <tr>
-              <td colspan="3" class="total">
-                <h5 class="secondary right">Grand Total</h5>
-              </td>
-              <td class="total">
-                {{!-- <h5 class="secondary">{{totalItems}}</h5> --}}
-              </td>
-              <td class="total">
-                {{!-- <h5 class="secondary">{{format-currency totalPrice}}</h5> --}}
-              </td>
-              <td class="total"></td>
-            </tr>
-          {{/if}}
-        </tbody>
-      </table>
-    </div>
+<div class="form-group row">
+  <label for="totalPrice" class="col-sm-2 col-form-label">Total Order Cost</label>
+  <div class="col-sm-2">
+    <input id="totalPrice" type="text" value={{format-currency this.model.totalPrice}} class="form-control" placeholder={{format-currency 0}} disabled="disabled">
   </div>
+  <div class="col-sm-2">
+    <button type="button" {{on "click" (fn this.onCreate "productModal")}} class="btn btn-primary btn"> Add Items</button>
+  </div>
+</div>
 
-  {{#if this.model.id}}
-    {{#if this.model.hasDirtyAttributes}}
-      <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Update </button>
-    {{else}}
-      <button type="button" class="button small radius disabled" disabled="disabled"> Update </button>
-    {{/if}}
+<BsModalSimple
+  @open={{this.showModal}}
+  @title={{this.modalTitle}}
+  @closeTitle="Ok"
+  @submitTitle={{null}}
+  @size=""
+  @closeButton={{true}}
+  @fade={{true}}
+  @backdrop={{true}}
+  @backdropClose={{true}}
+  @onHidden={{fn (mut this.showModal) false}}
+  @renderInPlace={{false}}>
+  {{#if this.isCustomerModal }}
+    <SelectCustomer @customers={{this.results}} @loading={{this.loadingResults}} @selectCustomer={{this.selectCustomer}} />
   {{else}}
-    <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Save </button>
+    <SelectProduct @products={{this.results}} @loading={{this.loadingResults}} @selectProduct={{this.selectProduct}} />
   {{/if}}
-  <button type="button" {{on "click" (fn this.cancel this.model)}} class="button small radius secondary"> Cancel </button>
+</BsModalSimple>
 
-</fieldset>
+<div class="form-group row">
+  <div class="col-sm-12">
+    <table class="table bg-light">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" width="150">Product Name</th>
+          <th scope="col" width="300">Product Desc</th>
+          <th scope="col">Price</th>
+          <th scope="col">Qty</th>
+          <th scope="col">Total</th>
+          <th scope="col"> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.model.items as |item|}}
+          <tr>
+            <td>{{item.product.name}}</td>
+            <td>{{item.product.description}}</td>
+            <td>{{format-currency item.product.price}}</td>
+            <td><Input @value={{item.quantity}} class="light" placeholder="Quantity" /></td>
+            <td>{{format-currency item.totalPrice}}</td>
+            <td><button type="button" {{on "click" (fn this.deleteItem item)}} class="button tiny radius alert"> Delete </button></td>
+          </tr>
+        {{else}}
+          <tr>
+            <td colspan="6"></td>
+          </tr>
+          <tr>
+            <td colspan="6" class="nodata">No itens added</td>
+          </tr>
+        {{/each}}
+        {{#if this.model.totalQuantity}}
+          <tr>
+            <td colspan="3" class="total">
+              <h5 class="secondary right">Grand Total</h5>
+            </td>
+            <td class="total">
+              <h5 class="secondary">{{this.model.totalQuantity}}</h5>
+            </td>
+            <td class="total">
+              <h5 class="secondary">{{format-currency this.model.totalPrice}}</h5>
+            </td>
+            <td class="total"></td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<hr>
+{{#if this.model.id}}
+  {{#if this.model.hasDirtyAttributes}}
+    <button type="button" {{on "click" (fn this.update this.model)}} class="btn btn-primary btn-sm"> Update </button>
+  {{else}}
+    <button type="button" class="btn btn-primary btn-sm" disabled="disabled"> Update </button>
+  {{/if}}
+{{else}}
+  <button type="button" {{on "click" (fn this.update this.model)}} class="btn btn-primary btn-sm"> Save </button>
+{{/if}}
 
 {{outlet}}

@@ -1,0 +1,24 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each @products as |product|}}
+    <tr {{on "click" (fn @selectProduct product)}} role="button">
+      <td>{{product.name}}</td>
+      <td>{{product.description}}</td>
+      <td>{{product.price}}</td>
+    </tr>
+    {{else}}
+    <tr>
+      <td colspan="2"> {{if @loading "Loading...." "No products found"}} </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{yield}}

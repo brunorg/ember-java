@@ -15,6 +15,6 @@ export default class ProductsRoute extends Route {
 
   @action
   didTransition() {
-    this.controllerFor("products").set("collapsed", true);
+    this.controllerFor("products").closeEditor();
   }
 }

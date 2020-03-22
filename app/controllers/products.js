@@ -10,6 +10,20 @@ export default class ProductsController extends Controller {
   @action
   toggle() {
     this.collapsed = !this.collapsed;
+    if (this.collapsed) {
+      this.closeEditor();
+    }
+  }
+
+  @action
+  closeEditor() {
+    this.collapsed = true;
+    this.model.forEach(item => {
+      if (item.hasDirtyAttributes) {
+        item.rollbackAttributes();
+      }
+    });
+    this.transitionToRoute("products");
   }
 
   @action

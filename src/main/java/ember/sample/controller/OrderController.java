@@ -53,7 +53,11 @@ class OrderController {
   @GetMapping("/orders")
   public byte[] all(@RequestParam("include") Optional<List<String>> include) throws JsonProcessingException, IllegalAccessException, DocumentSerializationException {
     List<Order> findAll = repository.findAll();
-    findAll.forEach(order -> { order.setCustomer( customerRepository.findById(order.getCustomer().getId()).get() ); });
+    findAll.forEach(order -> {
+      if (order.getCustomer() != null) {
+        order.setCustomer(customerRepository.findById(order.getCustomer().getId()).get());
+      }
+    });
     SerializationSettings.Builder result = new SerializationSettings.Builder();
     include.ifPresent(values ->  values.forEach(v -> result.includeRelationship(v)));
     return converter.writeDocumentCollection(new JSONAPIDocument<List<Order>>(findAll), result.build());
