@@ -1,0 +1,22 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each @customers as |customer|}}
+    <tr {{on "click" (fn @selectCustomer customer)}} role="button">
+      <td>{{customer.firstName}}</td>
+      <td>{{customer.lastName}}</td>
+    </tr>
+    {{else}}
+    <tr>
+      <td colspan="2"> {{if @loading "Loading...." "No customers found"}} </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{yield}}

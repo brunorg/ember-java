@@ -20,7 +20,7 @@ export default class Order extends Model {
     }, 0);
   }
 
-  @computed("items.@each.totalPrice")
+  @computed("items.@each.{totalPrice}")
   get totalPrice() {
     return this.items.reduce((sum, item) => {
       return parseInt(sum, 10) + parseInt(item.totalPrice, 10);

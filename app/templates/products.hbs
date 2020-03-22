@@ -1,35 +1,35 @@
-<LinkTo @route="products.edit" @model="new"><button type="button" class="button small"> New Product </button></LinkTo>
+<ToggleEditor @route="products.edit" @title="New Product" @collapsed={{this.collapsed}} @toggle={{this.toggle}} />
 
-{{outlet}}
-
-<table>
-  <thead>
+<table class="table table-striped">
+  <thead class="thead-light">
     <tr>
-      <th width="100">ID</th>
-      <th>Name</th>
-      <th width="200">Description</th>
-      <th>Price</th>
-      <th> </th>
+      <th scope="col" width="100">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col" width="200">Description</th>
+      <th scope="col">Price</th>
+      <th scope="col"> </th>
     </tr>
   </thead>
   <tbody>
-    {{#if this.model.isEmpty}}
-      <tr>
-        <td colspan="5"></td>
-      </tr>
-      <tr>
-        <td colspan="5" class="nodata">No products found</td>
-      </tr>
-    {{else}}
       {{#each this.model as |product|}}
         <tr>
-          <td><LinkTo @route="products.edit" @model={{product}}> {{product.id}} </LinkTo></td>
+          <th scope="row">
+            <LinkTo @route="products.edit" @model={{product}} {{on "click" this.openEditor}}> {{product.id}} </LinkTo>
+          </th>
           <td>{{product.name}}</td>
           <td>{{product.description}}</td>
           <td>{{format-currency product.price}}</td>
-          <td><button type="button" {{on "click" (fn this.remove product)}} class="button tiny radius alert"> Delete </button></td>
+          <td><button type="button" {{on "click" (fn this.remove product)}} class="btn btn-danger btn-sm"> Delete </button></td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td colspan="5" class="nodata">
+            <h3>No products found</h3>
+          </td>
         </tr>
       {{/each}}
-    {{/if}}
   </tbody>
 </table>

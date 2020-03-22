@@ -7,11 +7,17 @@ export default class ProductsEditController extends Controller {
 
   @action
   update(product) {
+    let messaging = this.messaging;
     if (product.id) {
-      product.save();
+      product.save().catch(function(reason) {
+        messaging.addError(reason);
+      });
     } else {
       let newProduct = this.store.createRecord("product", product);
-      newProduct.save().catch(this.error);
+      newProduct.save().catch(function(reason) {
+        newProduct.unloadRecord();
+        messaging.addError(reason);
+      });
     }
   }
 
@@ -23,15 +29,6 @@ export default class ProductsEditController extends Controller {
       }
     }
     this.transitionToRoute("products");
-  }
-
-  @action
-  error(error) {
-    error.errors.forEach(err => {
-      this.messaging.addError(err.title);
-    });
-    this.transitionToRoute("products");
-    this.transitionToRoute("application");
   }
 
 }

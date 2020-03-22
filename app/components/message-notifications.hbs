@@ -1,19 +1,19 @@
-<div class="row">
+<div id="message-notifications" class="fixed-top">
   {{#if this.messaging.hasMessages}}
-    <ul class="msg">
+    <ul class="list-group">
       {{#each this.errors as |message|}}
-        <li class="msg msg-error">{{message}}</li>
+        <li class="list-group-item list-group-item-danger">{{message}}</li>
       {{/each}}
       {{#each this.success as |message|}}
-        <li class="msg msg-success">{{message}}</li>
+        <li class="list-group-item list-group-item-success">{{message}}</li>
       {{/each}}
       {{#each this.fieldErrors as |msg|}}
-        <li class="msg msg-error">{{msg.class_name}} {{msg.property}} : {{msg.message}}</li>
+        <li class="list-group-item list-group-item-danger">{{msg.class_name}} {{msg.property}} : {{msg.message}}</li>
       {{/each}}
-      <li>
-        <button id="closeMessages" type="button" {{on "click" this.clearMessages}} class="tiny button secondary">
-          <span class="close">✗ Close messages</span>
-        </button>
+      <li class="list-group-item text-sm-center">
+          <button id="closeMessages" type="button" {{on "click" this.clearMessages}} class="close float-none" aria-label="Close">
+            <span aria-hidden="true" class="close">Close Messages &times;</span>
+          </button>
       </li>
     </ul>
   {{/if}}

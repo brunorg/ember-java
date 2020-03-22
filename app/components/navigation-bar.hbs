@@ -1,13 +1,21 @@
-<nav ...attributes>
-  <ul class="title-area">
-    <li class="name">
-      Ember - Java
-    </li>
-  </ul>
-  <ul id="nav-bar" class="button-group round even-6">
-    <li><LinkTo @route="customers" class="small button secondary">Customers</LinkTo></li>
-    <li><LinkTo @route="products" class="small button secondary">Products</LinkTo></li>
-    <li><LinkTo @route="orders" class="small button secondary">Orders</LinkTo></li>
-  </ul>
+<div>
+  <BsNav
+    @type="tabs"
+    @fill={{true}}
+    as |nav|>
+        <nav.item>
+          <nav.link-to @route="index">Home</nav.link-to>
+        </nav.item>
+        <nav.item>
+          <nav.link-to @route="customers">Customers</nav.link-to>
+        </nav.item>
+        <nav.item>
+          <nav.link-to @route="products">Products</nav.link-to>
+        </nav.item>
+        <nav.item>
+          <nav.link-to @route="orders">Orders</nav.link-to>
+        </nav.item>
+  </BsNav>
+
   {{yield}}
-</nav>
+</div>

@@ -1,0 +1,14 @@
+<BsCollapse @collapsed={{@collapsed}}>
+  <div class="well">
+    <fieldset class="p-3 shadow rounded">
+      {{outlet}}
+      <button type="button" class="btn btn-primary btn-sm" {{on "click" @toggle}}> Cancel </button>
+    </fieldset>
+  </div>
+</BsCollapse>
+
+<LinkTo @route={{@route}} @model="new" {{on "click" @toggle}}
+  class="{{if @collapsed "visible" "invisible"}}">
+  <button type="button" class="p-2 m-3 btn btn-primary btn-sm"> {{@title}} </button>
+</LinkTo>
+{{yield}}

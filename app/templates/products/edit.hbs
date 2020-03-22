@@ -1,46 +1,45 @@
-<fieldset class="large-8 columns">
-  <legend>Product</legend>
+<div class="form-group row">
+  <legend class="col-sm-12 col-form-label">
+    <h3>{{if this.model.id "Editing Product" "Creating New Product"}}</h3>
+  </legend>
+</div>
 
-  <div class="row">
-    <div class="large-4 columns">
-      <label>Id</label>
-      <h5>{{#if this.model.id}} {{this.model.id}} {{else}} New {{/if}}</h5>
-    </div>
+<div class="form-group row">
+  <label for="pk" class="col-sm-2 col-form-label">Id</label>
+  <div class="col-sm-10">
+    <input id="pk" type="text" value={{this.model.id}} class="form-control" placeholder="New" disabled="disabled">
   </div>
+</div>
 
-  <div class="row">
-    <div class="large-4 columns">
-      <label>Name</label>
-      <Input @value={{this.model.name}} class="light" placeholder="Product Name" />
-    </div>
+<div class="form-group row">
+  <label for="name" class="col-sm-2 col-form-label">Name</label>
+  <div class="col-sm-10">
+    <Input id="name" @value={{this.model.name}} class="light" placeholder="Product Name" />
   </div>
+</div>
 
-  <div class="row">
-    <div class="large-12 columns">
-      <label>Description</label>
-      <Input @value={{this.model.description}} class="light" placeholder="Description" />
-    </div>
+<div class="form-group row">
+  <label for="description" class="col-sm-2 col-form-label">Description</label>
+  <div class="col-sm-10">
+    <Input id="description" @value={{this.model.description}} class="light" placeholder="Description" />
   </div>
+</div>
 
-  <div class="row">
-    <div class="large-4 columns">
-      <label>Price</label>
-      <Input @value={{this.model.price}} class="light" placeholder="0,00" />
-    </div>
+<div class="form-group row">
+  <label for="price" class="col-sm-2 col-form-label">Price</label>
+  <div class="col-sm-10">
+    <Input id="price" @value={{this.model.price}} class="light" placeholder="0,00" />
   </div>
+</div>
 
-  {{#if this.model.id}}
-    {{#if this.model.hasDirtyAttributes}}
-      <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Update </button>
-    {{else}}
-      <button type="button" class="button small radius disabled" disabled="disabled"> Update </button>
-    {{/if}}
+{{#if this.model.id}}
+  {{#if this.model.hasDirtyAttributes}}
+    <button type="button" {{on "click" (fn this.update this.model)}} class="btn btn-primary btn-sm"> Update </button>
   {{else}}
-    <button type="button" {{on "click" (fn this.update this.model)}} class="button small radius active"> Save </button>
+    <button type="button" class="btn btn-primary btn-sm" disabled="disabled"> Update </button>
   {{/if}}
-  <button type="button" {{on "click" (fn this.cancel this.model)}} class="button small radius secondary"> Cancel </button>
+{{else}}
+  <button type="button" {{on "click" (fn this.update this.model)}} class="btn btn-primary btn-sm"> Save </button>
+{{/if}}
 
-</fieldset>
-
-<hr>
 {{outlet}}

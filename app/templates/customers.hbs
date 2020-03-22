@@ -1,35 +1,36 @@
-<LinkTo @route="customers.edit" @model="new"><button type="button" class="button small"> New Customer </button></LinkTo>
+<ToggleEditor @route="customers.edit" @title="New Customer" @collapsed={{this.collapsed}} @toggle={{this.toggle}} />
 
-{{outlet}}
-
-<table>
-  <thead>
+<table class="table table-striped">
+  <thead class="thead-light">
     <tr>
-      <th width="100">ID</th>
-      <th>First Name</th>
-      <th width="200">Last Name</th>
-      <th>Orders</th>
-      <th> </th>
+      <th scope="col" width="100">ID</th>
+      <th scope="col">First Name</th>
+      <th scope="col" width="200">Last Name</th>
+      <th scope="col">Orders</th>
+      <th scope="col"> </th>
     </tr>
   </thead>
   <tbody>
-    {{#if this.model.isEmpty}}
-      <tr>
-        <td colspan="5"></td>
-      </tr>
-      <tr>
-        <td colspan="5" class="nodata">No customers found</td>
-      </tr>
+    {{#each this.model as |customer|}}
+    <tr>
+      <th scope="row">
+        <LinkTo @route="customers.edit" @model={{customer}} {{on "click" this.openEditor}}> {{customer.id}} </LinkTo>
+      </th>
+      <td>{{customer.firstName}}</td>
+      <td>{{customer.lastName}}</td>
+      <td>{{customer.orders.length}}</td>
+      <td><button type="button" class="btn btn-danger btn-sm" {{on "click" (fn this.remove customer)}}> Delete </button>
+      </td>
+    </tr>
     {{else}}
-      {{#each this.model as |customer|}}
-        <tr>
-          <td><LinkTo @route="customers.edit" @model={{customer}}> {{customer.id}} </LinkTo></td>
-          <td>{{customer.firstName}}</td>
-          <td>{{customer.lastName}}</td>
-          <td>{{customer.orders.length}}</td>
-          <td><button type="button" {{on "click" (fn this.remove customer)}} class="button tiny radius alert"> Delete </button></td>
-        </tr>
-      {{/each}}
-    {{/if}}
+    <tr>
+      <td colspan="5"></td>
+    </tr>
+    <tr>
+      <td colspan="5" class="nodata">
+        <h3>No customers found</h3>
+      </td>
+    </tr>
+    {{/each}}
   </tbody>
 </table>
