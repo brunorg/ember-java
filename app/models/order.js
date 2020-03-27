@@ -1,17 +1,10 @@
-import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 
-@classic
-export default class Order extends Model {
-  @attr("date")
-  creationDate;
-
-  @belongsTo("customer")
-  customer;
-
-  @hasMany("order-item")
-  items;
+export default class OrderModel extends Model {
+  @attr("date") creationDate;
+  @belongsTo("customer") customer;
+  @hasMany("order-item") items;
 
   @computed("items.@each.quantity")
   get totalQuantity() {

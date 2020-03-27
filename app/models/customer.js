@@ -1,14 +1,9 @@
-import classic from 'ember-classic-decorator';
 import { computed } from '@ember/object';
 import Model, { attr, hasMany } from '@ember-data/model';
 
-@classic
-export default class Customer extends Model {
-  @attr()
-  firstName;
-
-  @attr()
-  lastName;
+export default class CustomerModel extends Model {
+  @attr() firstName;
+  @attr() lastName;
 
   @hasMany("order")
   orders;
