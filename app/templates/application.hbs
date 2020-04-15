@@ -6,18 +6,23 @@
 </div>
 
 <div id="title" class="fixed-top p-2 m-2 bg-info shadow rounded">
-  <h3 class="subheader">Ember - Java REST</h3>
+  <h3 class="subheader">Ember - Java REST
+    <div class="float-right">
+      <Avatar />
+    </div>
+  </h3>
 </div>
 
 <MessageNotifications />
 
 <div id="app-body" class="container">
+  {{#if this.session.isAuthenticated}}
   <div class="row">
     <div class="col">
       <NavigationBar class="top-bar" role="navigation" />
     </div>
   </div>
-
+  {{/if}}
   <div class="row">
     <div class="col">
       {{outlet}}
