@@ -72,6 +72,18 @@ Build successful (15309ms) – Serving on http://localhost:4200/
 
 Now you can access the application on http://localhost:4200/
 
+On login page enter the login: `tomster@emberjs.com` and password: `test`
+
+### 5. Creating other user
+
+You can add other user for test using the command
+
+```bash
+curl -H "Content-Type: application/json" -X POST -d '{
+    "username": "other_email@hostname.com",
+    "password": "password"
+}' http://localhost:8080/api/users/sign-up
+```
 
 ## More information: 
 
