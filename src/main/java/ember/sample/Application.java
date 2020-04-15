@@ -14,13 +14,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import ember.sample.model.User;
 import ember.sample.model.Customer;
 import ember.sample.model.Order;
 import ember.sample.model.OrderItem;
 import ember.sample.model.Product;
+import ember.sample.repository.UserRepository;
 import ember.sample.repository.CustomerRepository;
 import ember.sample.repository.OrderItemRepository;
 import ember.sample.repository.OrderRepository;
@@ -41,6 +44,9 @@ public class Application implements CommandLineRunner {
   @Autowired
   private OrderItemRepository orderItemRepository;
 
+  @Autowired
+  private UserRepository userRepository;
+
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
   }
@@ -52,6 +58,7 @@ public class Application implements CommandLineRunner {
     productRepository.deleteAll();
     orderItemRepository.deleteAll();
     orderRepository.deleteAll();
+    userRepository.deleteAll();
 
     // save a couple of customers
     Customer john = new Customer();
@@ -104,6 +111,19 @@ public class Application implements CommandLineRunner {
       System.out.println(customer);
     }
 
+    // create default user
+    User user = new User();
+    user.setUsername("tomster@emberjs.com");
+    String generatedSecuredPasswordHash = BCrypt.hashpw("test", BCrypt.gensalt(12));
+    user.setPassword(generatedSecuredPasswordHash);
+    user.setActive(true);
+    userRepository.save(user);
+
+    System.out.println("User with findByUsername('tomster@emberjs.com'):");
+    System.out.println("--------------------------------");
+    user = userRepository.findByUsername("tomster@emberjs.com").get();
+    System.out.println(user);
+
   }
 
   @Bean
@@ -140,7 +160,7 @@ public class Application implements CommandLineRunner {
     objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     objectMapper.configure(SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 
-    return new ResourceConverter(objectMapper, Customer.class, Product.class, Order.class, OrderItem.class);
+    return new ResourceConverter(objectMapper, Customer.class, Product.class, Order.class, OrderItem.class, User.class);
   }
 
 }
