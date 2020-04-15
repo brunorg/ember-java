@@ -1,0 +1,5 @@
+{{#if this.isAuthenticated}}
+  {{this.login}} <img src="https://www.gravatar.com/avatar/{{this.gravatar}}?s=40">
+  <LinkTo @route="login" {{on "click" this.logout}}>Logout</LinkTo>
+{{/if}}
+{{yield}}

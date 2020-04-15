@@ -5,6 +5,8 @@ module.exports = function(environment) {
     modulePrefix: 'ember-java',
     environment,
     rootURL: '/',
+    apiURL: 'http://localhost:8080',
+    apiNamespace: 'api',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

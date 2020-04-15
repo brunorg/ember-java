@@ -1,0 +1,26 @@
+<fieldset class="p-3 shadow rounded">
+  <div class="form-group row">
+    <legend class="col-sm-8 col-form-label">
+      <h3>Enter your credentials to login</h3>
+    </legend>
+  </div>
+
+  <div class="form-group row">
+    <label for="identification" class="col-sm-2 col-form-label">E-mail</label>
+    <div class="col-sm-6">
+      <Input id="identification" @value={{this.identification}} class="form-control" placeholder="Login" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="password" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-6">
+      <Input id="password" type='password' @value={{this.password}} class="form-control" placeholder="Password" />
+    </div>
+  </div>
+
+  <button type="button" {{on "click" this.authenticate}} class="btn btn-primary btn-sm"> Login </button>
+
+</fieldset>
+
+{{outlet}}
