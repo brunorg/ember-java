@@ -54,7 +54,7 @@
     "eslint-plugin-ember": "^7.9.0",
     "eslint-plugin-node": "^11.0.0",
     "loader.js": "^4.7.0",
-    "merge": "^1.2.1",
+    "merge": "^2.1.1",
     "qunit-dom": "^1.0.0",
     "uuid": "^3.4.0"
   },
